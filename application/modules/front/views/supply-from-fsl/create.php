@@ -310,6 +310,7 @@
 
                 if(isEmpty(fstatus) || fstatus == "-"){
                     update_detail_status(fid, fpartnum, fserialnum, fcomplete, fnotes);
+                    reload();
                 }else if(fstatus == "incomplete"){
                     arrStatus.push(fstatus);
                 }
