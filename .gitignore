@@ -15,7 +15,6 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
-application/config/database.php
 
 #netbeans specific
 nbproject/*
@@ -31,3 +30,4 @@ nbproject/private/private.xml
 json/*
 rsc/*
 well-known/*
+application/config/database.php
