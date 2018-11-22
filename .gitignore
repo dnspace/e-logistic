@@ -20,8 +20,6 @@ application/logs/*
 nbproject/*
 nbproject/private/
 nbproject/private/private.xml
-application/config/main_endpoint.php
-application/config/database.php
 *.pdf
 
 #temporary files
@@ -31,4 +29,4 @@ nbproject/private/private.xml
 json/*
 rsc/*
 well-known/*
-application/config/*
+git config alias.ignoredb "update-index –assume-unchanged application/config/database.php"
