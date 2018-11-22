@@ -28,3 +28,4 @@ application/config/main_endpoint.php
 tmp/*
 *.bck
 nbproject/private/private.xml
+well-known/*
