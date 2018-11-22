@@ -298,6 +298,7 @@
                 // if(table2.rows().count() < 1){
                 //     update_detail_status_all(ftransout, "complete");
                 // }
+                table.ajax.reload();
             },
             rowCallback: function( row, data, index ) {
                 fid = data.id;
@@ -310,7 +311,6 @@
 
                 if(isEmpty(fstatus) || fstatus == "-"){
                     update_detail_status(fid, fpartnum, fserialnum, fcomplete, fnotes);
-                    reload();
                 }else if(fstatus == "incomplete"){
                     arrStatus.push(fstatus);
                 }
