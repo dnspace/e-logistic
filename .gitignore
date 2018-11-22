@@ -30,3 +30,4 @@ tmp/*
 nbproject/private/private.xml
 json/*
 rsc/*
+well-known/*
