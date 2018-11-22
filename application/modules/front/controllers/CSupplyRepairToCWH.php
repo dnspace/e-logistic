@@ -516,9 +516,7 @@ class CSupplyRepairToCWH extends BaseController
         $fcode = $this->repo;
         $cartid = $this->session->userdata( 'cart_session' ).$this->apirole;
         $arrWhere = array('funiqid'=>$cartid);
-        
         $rs_data = send_curl($arrWhere, $this->config->item('api_incoming_cwh_list_cart'), 'POST', FALSE);
-        //var_dump($rs_data);
         $rs = $rs_data->status ? $rs_data->result : array();
         
         $data = array();
