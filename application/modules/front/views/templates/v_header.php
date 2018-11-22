@@ -272,7 +272,7 @@
                                     <li><a href="<?php echo base_url("supply-from-repair-trans");?>">Supply from Repair Center</a></li>
                                     <li><a href="<?php echo base_url("supply-from-fsl");?>">Supply from FSL</a></li>
                                     <li><a href="<?php echo base_url("supply-from-fsl-bad");?>">Supply from FSL Bad Part/Stock</a></li>
-                                    <li><a href="<?php echo base_url("supply-to-repair-trans");?>">Repair Order</a></li>
+                                    <!-- <li><a href="<?php echo base_url("supply-to-repair-trans");?>">Repair Order</a></li> -->
                                     <li><a href="<?php echo base_url("delivery-note-trans");?>">Send Parts to FSL</a></li>
                                 </ul>
                             </li>
