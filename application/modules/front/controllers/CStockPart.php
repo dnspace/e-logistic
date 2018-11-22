@@ -1031,7 +1031,7 @@ class CStockPart extends BaseController
         if(empty($rs)){
             $error_response = array(
                 'status' => 2,
-                'message'=> 'Sparepart data is not available in data master, please contact central warehouse!'
+                'message'=> 'Sparepart data is not available in data master, please contact central warehouse to add this sparepart!'
             );
             $response = $error_response;
         }else{
@@ -1062,6 +1062,7 @@ class CStockPart extends BaseController
                     $success_response = array(
                         'status' => 1,
                         'stock'=> $stock,
+                        'state' => 'A',
                         'message'=> 'Spartpart data is available, stock = '.$stock
                     );
                     $response = $success_response;
@@ -1069,6 +1070,7 @@ class CStockPart extends BaseController
                     $error_response = array(
                         'status' => 1,
                         'stock'=> $stock,
+                        'state' => 'A',
                         'message'=> 'Spartpart data is available but out of stock!'
                     );
                     $response = $error_response;
@@ -1076,6 +1078,7 @@ class CStockPart extends BaseController
             }else{
                 $error_response = array(
                     'status' => 0,
+                    'state' => 'NA',
                     'message'=> 'Sparepart data is not available, please add this sparepart data in data stock'
                 );
                 $response = $error_response;
