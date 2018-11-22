@@ -796,8 +796,13 @@
             success: function (jqXHR) {
                 if(jqXHR.status === 0){
                     e_partnum_notes.html('<span class="help-block text-warning">'+jqXHR.message+'</span>');
-                    //load data part replacement
-                    get_part_sub(partno);
+                    if(jqXHR.state === 'A'){
+                        //load data part replacement
+                        get_part_sub(partno);
+                    }else{
+                        e_partnum.val('');
+                        e_partnum.focus();
+                    }
                     status_checkpart = 0;
                 }else if(jqXHR.status === 1){
                     e_partnum_notes.html('<span class="help-block text-success">'+jqXHR.message+'</span>');
