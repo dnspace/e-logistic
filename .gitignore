@@ -29,6 +29,3 @@ nbproject/private/private.xml
 json/*
 rsc/*
 well-known/*
-git config alias.ignoredb "update-index –assume-unchanged application/config/database.php"
-application/config/database.php
-application/config/main_endpoint.php
