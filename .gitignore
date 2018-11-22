@@ -31,4 +31,4 @@ nbproject/private/private.xml
 json/*
 rsc/*
 well-known/*
-application/config/database.php
+application/config/*
