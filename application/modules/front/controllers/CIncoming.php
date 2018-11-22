@@ -883,10 +883,10 @@ class CIncoming extends BaseController
             redirect('view-incoming-trans');
         }elseif($this->isStaff()){
             
-            $this->global['pageTitle'] = 'New Incoming Transaction - '.APP_NAME;
-            $this->global['pageMenu'] = 'New Incoming Transaction';
-            $this->global['contentHeader'] = 'New Incoming Transaction';
-            $this->global['contentTitle'] = 'New Incoming Transaction';
+            $this->global['pageTitle'] = 'Supply Stock from Central Warehouse - '.APP_NAME;
+            $this->global['pageMenu'] = 'Supply Stock from Central Warehouse';
+            $this->global['contentHeader'] = 'Supply Stock from Central Warehouse';
+            $this->global['contentTitle'] = 'Supply Stock from Central Warehouse';
             $this->global ['role'] = $this->role;
             $this->global ['name'] = $this->name;
             // $this->loadViews('front/incoming-trans/create', $this->global, NULL);
