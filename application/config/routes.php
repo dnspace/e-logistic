@@ -495,7 +495,7 @@ $route['print-incoming-return/(:any)'] = 'front/cincoming/print_trans_return/$1'
 //  Routing Front Supply from CWH
 // ===========================
 $route['supply-from-cwh'] = 'front/csupplyfromcwh';
-$route['add-supply-from-cwh'] = 'front/csupplyfromcwh/add';
+$route['add-supply-from-cwh'] = 'front/cincoming/add';
 
 $route['supply-from-cwh/view'] = 'front/csupplyfromcwh';
 $route['supply-from-cwh/add'] = 'front/csupplyfromcwh/add';

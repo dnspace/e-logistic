@@ -20,7 +20,6 @@ application/logs/*
 nbproject/*
 nbproject/private/
 nbproject/private/private.xml
-application/config/main_endpoint.php
 *.pdf
 
 #temporary files

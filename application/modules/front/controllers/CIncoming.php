@@ -889,7 +889,8 @@ class CIncoming extends BaseController
             $this->global['contentTitle'] = 'New Incoming Transaction';
             $this->global ['role'] = $this->role;
             $this->global ['name'] = $this->name;
-            $this->loadViews('front/incoming-trans/create', $this->global, NULL);
+            // $this->loadViews('front/incoming-trans/create', $this->global, NULL);
+            $this->loadViews('front/incoming-trans/create_cwh', $this->global, NULL);
             
         }else{
             redirect('cl');
