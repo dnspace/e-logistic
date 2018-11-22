@@ -15,13 +15,13 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
-application/config/database.php
 
 #netbeans specific
 nbproject/*
 nbproject/private/
 nbproject/private/private.xml
 application/config/main_endpoint.php
+application/config/database.php
 *.pdf
 
 #temporary files
