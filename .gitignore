@@ -31,4 +31,3 @@ json/*
 rsc/*
 well-known/*
 */config/*
-application/config/main_endpoint.php
