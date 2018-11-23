@@ -837,9 +837,9 @@ class CRequestParts extends BaseController
                             foreach ($data_tmp as $d){
                                 $partstock = $this->get_stock($fcode, $d['partno']);
 //                                var_dump($partstock);
-                                if($partstock < (int)$d['qty']){
+                                //if($partstock < (int)$d['qty']){
                                     //skip this insert detail for this row
-                                }else{
+                                //}else{
                                     $dataDetail = array('ftransno'=>$transnum, 'fpartnum'=>$d['partno'], 'fserialnum'=>$d['serialno'], 
                                         'fqty'=>$d['qty']);
 //                                    $listdetail[] = $dataDetail;
@@ -853,7 +853,7 @@ class CRequestParts extends BaseController
                                     $update_stock_res = send_curl($this->security->xss_clean($dataUpdateStock), $this->config->item('api_edit_stock_part_stock'), 
                                             'POST', FALSE);
                                     */
-                                }
+                                //}
                             }
 //                            var_dump($listdetail);
 //                            var_dump($listupdatestock);exit();
