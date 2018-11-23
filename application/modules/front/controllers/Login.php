@@ -37,6 +37,8 @@ class Login extends CI_Controller
                 }
             }
         }
+
+        $browser = $this->common->check_browser();
         $this->isSessionFilled();
     }
     
