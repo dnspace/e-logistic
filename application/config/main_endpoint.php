@@ -1,16 +1,26 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 //adding config items.
 
+/*
 if(file_exists(FCPATH.'local.txt')) {
     // Local Server
-    define('urlapi',   "https://202.158.125.181:4599/");
+    define('urlapi',   "http://localhost:8080/dn-logistic-api/");
     $config['emailsender']  = "noreplyplease@service-division.com";
 }elseif(file_exists(FCPATH.'dev.txt')) {
     // Development Server
-    define('urlapi',   "https://202.158.125.181:4599/");
+    define('urlapi',   "http://localhost:8080/dn-logistic-api/");
     $config['emailsender']  = "noreplyplease@service-division.com";
 }else{
     // Live Server
+    define('urlapi',   "http://localhost:8080/dn-logistic-api/");
+    $config['emailsender']  = "noreplyplease@service-division.com";
+}
+*/
+
+if(ENVIRONMENT !== 'production'){
+    define('urlapi',   "http://localhost:8080/dn-logistic-api/");
+    $config['emailsender']  = "noreplyplease@service-division.com";
+}else{
     define('urlapi',   "https://202.158.125.181:4599/");
     $config['emailsender']  = "noreplyplease@service-division.com";
 }
