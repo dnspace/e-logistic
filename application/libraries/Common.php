@@ -239,6 +239,47 @@ class Common
         return $message;
     }
 
+    public function check_browser()
+    {
+        $arr_browsers = ["Firefox", "Chrome", "Safari", "Opera", 
+        "MSIE", "Trident", "Edge"];
+
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+
+        $user_browser = '';
+        foreach ($arr_browsers as $browser) {
+            if (strpos($agent, $browser) !== false) {
+                $user_browser = $browser;
+                break;
+            }   
+        }
+
+        switch ($user_browser) {
+            case 'MSIE':
+                $user_browser = 'Internet Explorer';
+            break;
+
+            case 'Trident':
+                $user_browser = 'Internet Explorer';
+            break;
+
+            case 'Edge':
+                $user_browser = 'Internet Explorer';
+            break;
+        }
+        
+        $force_download_url = "https://www.google.com/chrome/browser/desktop/index.html";
+
+        if($user_browser === "Chrome"){
+            echo '<script>alert("Thanks for using Chrome, Please use the latest version of Google Chrome to accessing this application!");</script>';
+        }elseif($user_browser === "Opera"){
+            echo '<script>alert("Thanks for using Opera, Please use the latest version of Opera to accessing this application!");</script>';
+        }else{
+            echo '<script>alert("Please use the latest version of Google Chrome to accessing this application!");</script>';
+            echo ("<script>location.href='$force_download_url'</script>");
+        }
+    }
+
 }
 
 ?>
