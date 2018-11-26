@@ -323,8 +323,13 @@ $route['print-delivery-note-trans/(:any)'] = 'front/cdeliverynote/print_trans/$1
 
 //api index.php
 $route['api-delivery-note-get-datatable']  = 'front/cdeliverynote/get_list_view_datatable';
+$route['api-delivery-note-check-trans']  = 'front/cdeliverynote/check_transaction';
+$route['api-delivery-note-get-transfer']  = 'front/cdeliverynote/get_transfer';
 $route['api-delivery-note-get-trans']  = 'front/cdeliverynote/get_trans';
 $route['api-delivery-note-get-trans-detail']  = 'front/cdeliverynote/get_trans_detail';
+$route['api-delivery-note-edit-detail-id']  = 'front/cdeliverynote/update_detail_id';
+$route['api-delivery-note-edit-detail-status']  = 'front/cdeliverynote/update_detail_status';
+$route['api-delivery-note-edit-detail-status-all']  = 'front/cdeliverynote/update_detail_status_all';
 
 // ===========================
 //  End Routing Delivery Note Trans
@@ -502,7 +507,7 @@ $route['supply-from-cwh/add'] = 'front/csupplyfromcwh/add';
 $route['supply-from-cwh/add/(:any)'] = 'front/csupplyfromcwh/add/$1';
 $route['supply-from-cwh/list/([a-zA-Z]+)'] = 'front/csupplyfromcwh/get_list/$1';
 $route['supply-from-cwh/check-ticket'] = 'front/csupplyfromcwh/check_ticket';
-$route['supply-from-cwh/insert'] = 'front/csupplyfromcwh/submit_trans';
+$route['supply-from-cwh/insert'] = 'front/csupplyfromcwh/submit_trans_supply';
 $route['supply-from-cwh/insert_close'] = 'front/csupplyfromcwh/submit_trans_close';
 $route['supply-from-cwh/print/(:any)'] = 'front/csupplyfromcwh/print_transaction/$1';
 // ===========================

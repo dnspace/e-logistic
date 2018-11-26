@@ -408,27 +408,85 @@ class CDeliveryNote extends BaseController
             json_encode(array('data'=>$rdata))
         );
     }
+
+    /**
+     * This function is used to get detail request
+     */
+    public function get_transfer(){
+        $rs = array();
+        $arrWhere = array();
+        
+        $ftrans_out = $this->input->get('ftrans_out', TRUE);        
+        if(!empty($ftrans_out)){
+            //Parameters for cURL
+            $arrWhere = array('ftransnum'=>$ftrans_out);
+        
+            //Parse Data for cURL
+            $rs_data = send_curl($arrWhere, $this->config->item('api_get_delivery_note_get_trans'), 'POST', FALSE);
+            $rs = $rs_data->status ? $rs_data->result : array();
+        }else{
+            $rs = array();
+            $arrWhere = array();
+        }
+        
+        $data = array();
+        foreach ($rs as $r) {
+            $transnum = filter_var($r->delivery_note_num, FILTER_SANITIZE_STRING);
+            $transdate = filter_var($r->date, FILTER_SANITIZE_STRING);
+            $transdate_eta = filter_var($r->delivery_note_eta, FILTER_SANITIZE_STRING);
+            $fpurpose = filter_var($r->delivery_note_purpose, FILTER_SANITIZE_STRING);
+            $total_qty = filter_var($r->delivery_note_qty, FILTER_SANITIZE_NUMBER_INT);
+            $user_fullname = filter_var($r->user_fullname, FILTER_SANITIZE_STRING);
+            $fsl = filter_var($r->fsl_code, FILTER_SANITIZE_STRING);
+            $fsl_name = filter_var($r->fsl_name, FILTER_SANITIZE_STRING);
+            $notes = filter_var($r->delivery_note_notes, FILTER_SANITIZE_STRING);
+            $status = filter_var($r->delivery_note_status, FILTER_SANITIZE_STRING);
+            $purpose = "";
+            $curdatetime = new DateTime();
+            $datetime2 = new DateTime($transdate);
+            $interval = $curdatetime->diff($datetime2);
+//            $elapsed = $interval->format('%a days %h hours');
+            $elapsed = $interval->format('%a days');
+            
+            $get_purpose = $this->config->config['purpose']['out_delivery'];
+            $purpose = isset($get_purpose[$fpurpose]) ? $get_purpose[$fpurpose] : "-";
+            
+            $row['transnum'] = $transnum;
+            $row['transdate'] = date('d/m/Y H:i', strtotime($transdate));
+            $row['transdate_eta'] = date('d/m/Y', strtotime($transdate_eta));
+            $row['purpose'] = $purpose;
+            $row['qty'] = $total_qty;
+            $row['fsl'] = $fsl;
+            $row['fslname'] = $fsl_name;
+            $row['status'] = $status === "open" ? strtoupper($status)." (".$elapsed.")" : strtoupper($status);
+ 
+            $data[] = $row;
+        }
+        
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode(array('data'=>$data))
+        );
+    }
     
     /**
      * This function is used to load the add new form
      */
-    public function add() {        
+    public function add() 
+    {     
+        $this->global['pageTitle'] = 'Delivery Note - '.APP_NAME;
+        $this->global['pageMenu'] = 'Delivery Note';
+        $this->global['contentHeader'] = 'Delivery Note';
+        $this->global['contentTitle'] = 'Delivery Note';
+        $this->global ['role'] = $this->role;
+        $this->global ['name'] = $this->name;
         
-            
-            $this->global['pageTitle'] = 'Delivery Note - '.APP_NAME;
-            $this->global['pageMenu'] = 'Delivery Note';
-            $this->global['contentHeader'] = 'Delivery Note';
-            $this->global['contentTitle'] = 'Delivery Note';
-            $this->global ['role'] = $this->role;
-            $this->global ['name'] = $this->name;
-            
-            $data['list_eg'] = $this->get_list_engineers();
-            $data['list_fsl'] = $this->get_list_warehouse('array');
-            $data['list_part'] = $this->get_list_part();
-            
-            $this->loadViews('front/delivery-note/create', $this->global, $data);
-            
+        $data['list_eg'] = $this->get_list_engineers();
+        $data['list_fsl'] = $this->get_list_warehouse('array');
+        $data['list_part'] = $this->get_list_part();
         
+        $this->loadViews('front/delivery-note/create', $this->global, $data);
     }
     
 ////////////////////////// FORM CREATE /////////////////////////////////////////
@@ -748,6 +806,63 @@ class CDeliveryNote extends BaseController
             $response = $error_response;
         }
         
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode($response)
+        );
+    }
+
+    /**
+     * This function is used to check transaction
+     */
+    public function check_transaction(){
+        $rs = array();
+        $arrWhere = array();
+        $global_response = array();
+        $success_response = array();
+        $error_response = array();
+        
+        $fcode_dest = $this->repo;
+        $ftrans_out = $this->input->get('ftrans_out', TRUE);
+        $arrWhere = array('fcode'=>$fcode_dest, 'ftrans_out'=>$ftrans_out);
+        
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_data_delivery_note'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        if(!empty($rs)){
+            $total_qty = 0;
+            $purpose = "";
+            $status = "";
+            foreach ($rs as $r){
+                $total_qty = filter_var($r->delivery_note_qty, FILTER_SANITIZE_NUMBER_INT);
+                $purpose = filter_var($r->delivery_note_purpose, FILTER_SANITIZE_STRING);
+                $status = filter_var($r->delivery_note_status, FILTER_SANITIZE_STRING);
+            }
+            if($status === "open" || $status === "pending"){
+                $global_response = array(
+                    'status' => 1,
+                    'purpose' => $purpose,
+                    'total_qty' => $total_qty,
+                    'message'=> 'Transaction still open'
+                );
+            }else{
+                $global_response = array(
+                    'status' => 0,
+                    'total_qty' => 0,
+                    'message'=> 'Transaction is already complete, you cannot close this transaction twice.'
+                );
+            }
+            $response = $global_response;
+        }else{
+            $error_response = array(
+                'status' => 0,
+                'total_qty'=> 0,
+                'message'=> 'Transaction is not available'
+            );
+            $response = $error_response;
+        }
         return $this->output
         ->set_content_type('application/json')
         ->set_output(
@@ -1432,6 +1547,111 @@ class CDeliveryNote extends BaseController
         ->set_content_type('application/json')
         ->set_output(
             json_encode($transnum)
+        );
+    }
+
+    /**
+     * This function is used to update detail outgoing status
+     */
+    public function update_detail_id(){
+        $success_response = array(
+            'status' => 1
+        );
+        $error_response = array(
+            'status' => 0,
+            'message'=> 'Failed to update detail'
+        );
+        
+        $fid = $this->input->post('fid', TRUE);
+        $fpartnum = $this->input->post('fpartnum', TRUE);
+        $fserialnum = $this->input->post('fserialnum', TRUE);
+        $fnotes = $this->input->post('fnotes', TRUE);
+        $fstatus = $this->input->post('fstatus', TRUE);
+
+        $arrWhere = array('fid'=>$fid, 'fpartnum'=>$fpartnum, 'fserialnum'=>$fserialnum, 'fnotes'=>$fnotes, 'fstatus'=>$fstatus);
+        $rs_data = send_curl($arrWhere, $this->config->item('api_update_delivery_note_detail_id'), 'POST', FALSE);
+
+        if($rs_data->status)
+        {
+            $response = $success_response;
+        }
+        else
+        {
+            $response = $error_response;
+        }
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode($response)
+        );
+    }
+
+    /**
+     * This function is used to update detail outgoing status
+     */
+    public function update_detail_status(){
+        $success_response = array(
+            'status' => 1
+        );
+        $error_response = array(
+            'status' => 0,
+            'message'=> 'Failed to update detail'
+        );
+        
+        $ftrans_out = $this->input->post('ftrans_out', TRUE);
+        $fpartnum = $this->input->post('fpartnum', TRUE);
+        $fserialnum = $this->input->post('fserialnum', TRUE);
+        $fstatus = $this->input->post('fstatus', TRUE);
+        $fnotes = $this->input->post('fnotes', TRUE);
+
+        $arrWhere = array('ftrans_out'=>$ftrans_out, 'fpartnum'=>$fpartnum, 'fserialnum'=>$fserialnum, 
+            'fstatus'=>$fstatus, 'fnotes'=>$fnotes);
+        $rs_data = send_curl($arrWhere, $this->config->item('api_update_delivery_note_detail_status'), 'POST', FALSE);
+
+        if($rs_data->status)
+        {
+            $response = $success_response;
+        }
+        else
+        {
+            $response = $error_response;
+        }
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode($response)
+        );
+    }
+    
+    /**
+     * This function is used to update detail outgoing status
+     */
+    public function update_detail_status_all(){
+        $success_response = array(
+            'status' => 1
+        );
+        $error_response = array(
+            'status' => 0,
+            'message'=> 'Failed to update detail'
+        );
+        
+        $ftrans_out = $this->input->post('ftrans_out', TRUE);
+        $fstatus = $this->input->post('fstatus', TRUE);
+        $arrWhere = array('ftrans_out'=>$ftrans_out, 'fstatus'=>$fstatus);
+        $rs_data = send_curl($arrWhere, $this->config->item('api_update_delivery_note_detail_all'), 'POST', FALSE);
+
+        if($rs_data->status)
+        {
+            $response = $success_response;
+        }
+        else
+        {
+            $response = $error_response;
+        }
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode($response)
         );
     }
     
