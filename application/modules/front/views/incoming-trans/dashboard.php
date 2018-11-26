@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="col-sm-4 col-lg-4 col-xl-4">
-        <div class="card-box bg-primary widget-flat border-primary text-white" 
+        <div class="card-box widget-flat border-custom bg-custom text-white" 
         data-toggle="tooltip" data-placement="top" data-original-title="Use this feature to view Transfered Stock by Another FSL">
             <i class="fi-archive"></i>
             <p class="text-uppercase m-b-5 font-18 font-600">Received Transfer from FSL</p>
@@ -41,9 +41,9 @@
             </div>
         </div>
     </div>
-    <!--
     <div class="col-sm-4 col-lg-4 col-xl-4">
-        <div class="card-box widget-flat border-success bg-success text-white">
+        <div class="card-box widget-flat border-custom bg-custom text-white" 
+        data-toggle="tooltip" data-placement="top" data-original-title="Use this feature to view Transfered Stock by Central Warehouse">
             <i class="fi-archive"></i>
             <p class="text-uppercase m-b-5 font-18 font-600">Received Parts from Warehouse</p>
             <div class="btn-list">
@@ -59,24 +59,6 @@
                 <button type="button" onclick="location.href='<?php echo base_url('supply-from-cwh/view');?>'" class="btn btn-warning waves-light waves-effect">
                     View Detail
                 </button>
-            </div>
-        </div>
-    </div>
-    -->
-    <div class="col-sm-4 col-lg-4 col-xl-4">
-        <div class="card-box widget-flat border-success bg-success text-white">
-            <i class="fi-archive"></i>
-            <p class="text-uppercase m-b-5 font-18 font-600">Received Parts from Warehouse</p>
-            <div class="btn-list">
-                <?php
-                    if(!$readonly){
-                ?>
-                <button type="button" onclick="location.href='<?php echo base_url('add-supply-from-cwh');?>'" class="btn btn-default waves-light waves-effect">
-                    Add New
-                </button>
-                <?php
-                    }
-                ?>
             </div>
         </div>
     </div>

@@ -29,3 +29,6 @@ $config['status']['in_transfer_fsl'] = array(
     // 'no_physic'=>'No Physic',
     'diff_serialnumber'=>'Different Serial Number',
 );
+$config['purpose']['out_delivery'] = array(
+    'SPL'=>'Supply',
+);
