@@ -31,3 +31,4 @@ json/*
 rsc/*
 well-known/*
 */config/*
+local.txt
