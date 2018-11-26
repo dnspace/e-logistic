@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-4 col-lg-4 col-xl-4">
+    <div class="col-sm-4 col-lg-4 col-xl-4"> 
         <div class="card-box widget-flat border-custom bg-custom text-white" 
         data-toggle="tooltip" data-placement="top" data-original-title="Use this feature to view Transfered Stock by Central Warehouse">
             <i class="fi-archive"></i>
