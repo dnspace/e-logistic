@@ -502,6 +502,7 @@ class CRequestParts extends BaseController
                     $fslcode = filter_var($r->fsl_code, FILTER_SANITIZE_STRING);
                     $fslname = filter_var($r->fsl_name, FILTER_SANITIZE_STRING);
                     $qty = filter_var($r->outgoing_qty, FILTER_SANITIZE_NUMBER_INT);
+                    $partnername = filter_var($r->partner_name, FILTER_SANITIZE_STRING);
                     $user_fullname = filter_var($r->user_fullname, FILTER_SANITIZE_STRING);
                     $notes = filter_var($r->outgoing_notes, FILTER_SANITIZE_STRING);
                     $status = filter_var($r->outgoing_status, FILTER_SANITIZE_STRING);
@@ -534,6 +535,7 @@ class CRequestParts extends BaseController
                     $row['takeby'] = $takeby;
                     $row['purpose'] = $purpose;
                     $row['qty'] = $qty;
+                    $row['partner'] = $partnername;
                     $row['fsl_location'] = $fslname;
         //            $row['notes'] = "-";
                     $row['status'] = $status === "open" ? strtoupper($status)."<br> (".$elapsed.")" : strtoupper($status);
