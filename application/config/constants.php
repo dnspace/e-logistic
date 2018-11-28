@@ -90,11 +90,13 @@ define('ROLE_SU','9ebdbd676d92059e0d2d7e10e5a748a7e81c4c08');
 define('ROLE_WA','7559e5315b0509edd63ba4db39c945ba6b2b68ca');
 define('ROLE_SPV','5e09b7b6c48f022f5699470358048622afb2ae3b');
 define('ROLE_AM','3ca7f693e8bdfa1ffe776ead7a0ca02cd0b48a07');
+define('ROLE_AV','86BC6FC9225B1E6507AF857C161F6AE9EA2721D83E59D991A359E42215DEE2FF');
 
 define('BASE_SU','1');
 define('BASE_WA','2');
 define('BASE_SPV','3');
 define('BASE_AM','4');
+define('BASE_AV','5');
 
 define('APP_NAME','E-Logistic');
 define('PAGE_TITLE','');
