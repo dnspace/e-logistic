@@ -464,7 +464,7 @@ class CFsltocwh extends BaseController
         $success_response = array();
         $error_response = array();
         
-        $fcode = $this->role;
+        $fcode = $this->repo;
         $fpartnum = $this->input->post('fpartnum', TRUE);
         
         $arrWhere = array('fcode'=>$fcode, 'fpartnum'=>$fpartnum);
