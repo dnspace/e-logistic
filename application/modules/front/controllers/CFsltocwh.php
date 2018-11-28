@@ -470,7 +470,7 @@ class CFsltocwh extends BaseController
         $arrWhere = array('fcode'=>$fcode, 'fpartnum'=>$fpartnum);
         
         //Parse Data for cURL
-        $rs_data = send_curl($arrWhere, $this->config->item('api_info_part_stock_wh'), 'POST', FALSE);
+        $rs_data = send_curl($arrWhere, $this->config->item('api_info_part_stock'), 'POST', FALSE);
         $rs = $rs_data->status ? $rs_data->result : array();
         
         if(!empty($rs)){
