@@ -87,22 +87,6 @@ class Login extends CI_Controller
             //Check Result ( Get status TRUE or FALSE )
             if($res->status){
                 $wh_name = $res->accessRepo === "00" ? "WH" : $this->get_info_warehouse_name($res->accessRepo);
-//                if($res->role === ROLE_SPV){
-//                    //Set Session for login
-//                    $sessionArray = array(
-//                        'ovId'=>$res->accessId,         
-//                        'ovUR'=>$res->accessUR,   
-//                        'ovName'=>$res->accessName,
-//                        'ovRepo'=>$res->accessRepo,   
-//                        'ovCoverage'=>$res->accessCoverage,
-//                        'ovRepoName'=>$wh_name,
-//                        'ovRole'=>$res->role,
-//                        'ovRoleText'=>$res->roleText,
-//                        'isSessionSettled' => TRUE
-//                    );
-//                    $this->session->set_userdata($sessionArray);
-//                    redirect('oversee');
-//                }else{
                     //Set Session for login
                     $sessionArray = array(
                         'vendorId'=>$res->accessId,         
@@ -119,7 +103,6 @@ class Login extends CI_Controller
                     );
                     $this->session->set_userdata($sessionArray);
                     redirect('cl');
-//                }
             }
             else{
                 $this->session->set_flashdata('error', $res->message);
