@@ -1051,6 +1051,36 @@ class CIncoming extends BaseController
         
         return $data;
     }
+
+    /**
+     * This function is used to get list information described by function name
+     */
+    private function get_stock($fcode, $partnum){
+        $rs = array();
+        $arrWhere = array();
+        $val_stock = 0;
+        
+        $arrWhere = array('fcode'=>$fcode, 'fpartnum'=>$partnum);        
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_info_part_stock'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        $data = array();
+        foreach ($rs as $r) {
+            $minval = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
+            $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
+            $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
+            $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
+            
+            if($initflag === "Y"){
+                $val_stock = $initstock;
+            }else{
+                $val_stock = $stock;
+            }
+        }
+        
+        return $val_stock;
+    }
     
     /**
      * This function is used to get detail information
@@ -1525,46 +1555,42 @@ class CIncoming extends BaseController
             $dataDetail = array();
             $total_qty = 0;
             if(!empty($data_tmp)){
-                foreach ($data_tmp as $d){
-                    $rs_stock = $this->get_info_part_stock($fcode, $d['partno']);
-                    foreach ($rs_stock as $s){
-                        $partstock = (int)$s["stock"];
-                    }
-                    $dataDetail = array('ftransno'=>$transnum, 'fpartnum'=>$d['partno'], 'fserialnum'=>$d['serialno'], 
-                        'fqty'=>$d['qty']);
-                    $sec_res = send_curl($this->security->xss_clean($dataDetail), $this->config->item('api_add_incomings_trans_detail'), 
-                            'POST', FALSE);
-                    $total_qty += (int)$d['qty'];
-                    
-                    $dataUpdateStock = array('fcode'=>$fcode, 'fpartnum'=>$d['partno'], 'fqty'=>(int)$partstock+(int)$d['qty'], 'fflag'=>'N');
-                    //update stock by fsl code and part number
-                    $update_stock_res = send_curl($this->security->xss_clean($dataUpdateStock), $this->config->item('api_edit_stock_part_stock'), 
-                            'POST', FALSE);
-                }
-            }
-			
-            $dataTrans = array('ftransno'=>$transnum, 'ftrans_out'=>$ftrans_out, 'fdate'=>$date, 'fpurpose'=>$fpurpose, 
+                $dataTrans = array('ftransno'=>$transnum, 'ftrans_out'=>$ftrans_out, 'fdate'=>$date, 'fpurpose'=>$fpurpose, 
                 'fqty'=>$total_qty, 'fuser'=>$createdby, 'fcode'=>$fcode, 'fcode_from'=>'', 'fnotes'=>$fnotes);
-            $main_res = send_curl($this->security->xss_clean($dataTrans), $this->config->item('api_add_incomings_trans'), 'POST', FALSE);
-            if($main_res->status)
-            {
-                //clear cart list data
-                $arrWhere = array('fcartid'=>$cartid);
-                $rem_res = send_curl($this->security->xss_clean($arrWhere), $this->config->item('api_clear_incomings_cart'), 'POST', FALSE);
-                if($rem_res->status){
-                    $success_response = array(
-                        'status' => 1,
-                        'message' => $transnum
-                    );
-                    $response = $success_response;
-                }else{
+                $main_res = send_curl($this->security->xss_clean($dataTrans), $this->config->item('api_add_incomings_trans'), 'POST', FALSE);
+                if($main_res->status)
+                {
+                    foreach ($data_tmp as $d){
+                        $partstock = $this->get_stock($fcode, $d['partno']);
+                        $dataDetail = array('ftransno'=>$transnum, 'fpartnum'=>$d['partno'], 'fserialnum'=>$d['serialno'], 
+                            'fqty'=>$d['qty']);
+                        $sec_res = send_curl($this->security->xss_clean($dataDetail), $this->config->item('api_add_incomings_trans_detail'), 
+                                'POST', FALSE);
+                        $total_qty += (int)$d['qty'];
+                        
+                        $dataUpdateStock = array('fcode'=>$fcode, 'fpartnum'=>$d['partno'], 'fqty'=>(int)$partstock+(int)$d['qty'], 'fflag'=>'N');
+                        //update stock by fsl code and part number
+                        $update_stock_res = send_curl($this->security->xss_clean($dataUpdateStock), $this->config->item('api_edit_stock_part_stock'), 
+                                'POST', FALSE);
+                    }
+                    //clear cart list data
+                    $arrWhere = array('fcartid'=>$cartid);
+                    $rem_res = send_curl($this->security->xss_clean($arrWhere), $this->config->item('api_clear_incomings_cart'), 'POST', FALSE);
+                    if($rem_res->status){
+                        $success_response = array(
+                            'status' => 1,
+                            'message' => $transnum
+                        );
+                        $response = $success_response;
+                    }else{
+                        $response = $error_response;
+                    }
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Failed to submit transaction data');
                     $response = $error_response;
                 }
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Failed to submit transaction data');
-                $response = $error_response;
             }
         }
         return $this->output
@@ -1888,10 +1914,7 @@ class CIncoming extends BaseController
                 {
                     foreach ($data_tmp as $d){
                         $dataDetail = array();
-                        $rs_stock = $this->get_info_part_stock($fcode, $d['partno']);
-                        foreach ($rs_stock as $s){
-                            $partstock = (int)$s["stock"];
-                        }
+                        $partstock = $this->get_stock($fcode, $d['partno']);
 
                         $dataDetail = array('ftransno'=>$transnum, 'fpartnum'=>$d['partno'], 'fserialnum'=>$d['serialno'], 
                             'fqty'=>$d['qty']);
@@ -2027,11 +2050,7 @@ class CIncoming extends BaseController
                     $return = filter_var($r->return_status, FILTER_SANITIZE_STRING);
                     $deleted = filter_var($r->is_deleted, FILTER_SANITIZE_NUMBER_INT);
             
-                    $rs_stock = $this->get_info_part_stock($fcode, $partnum);
-                    $partstock = 0;
-                    foreach ($rs_stock as $s){
-                        $partstock = (int)$s["stock"];
-                    }
+                    $partstock = $this->get_stock($fcode, $partnum);
                     $dataDetail = array('ftransno'=>$transnum, 'fpartnum'=>$partnum, 'fserialnum'=>$serialnum, 
                         'fqty'=>$qty);
                     $sec_res = send_curl($this->security->xss_clean($dataDetail), $this->config->item('api_add_incomings_trans_detail'), 
