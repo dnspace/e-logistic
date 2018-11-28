@@ -23,8 +23,10 @@ class CEngineers extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isWebAdmin()){
+        if($this->isSpv() || $this->isWebAdmin()){
             $this->readonly = FALSE;
+            $this->hasHub = TRUE;
+            $this->hasCoverage = TRUE;
         }else{
             $this->readonly = TRUE;
         }
@@ -311,7 +313,7 @@ class CEngineers extends BaseController
      */
     function add()
     {
-        if($this->isWebAdmin()){
+        if($this->isSpv() || $this->isWebAdmin()){
             $this->global['pageTitle'] = "Add New Engineer - ".APP_NAME;
             $this->global['pageMenu'] = 'Add New Engineer';
             $this->global['contentHeader'] = 'Add New Engineer';
