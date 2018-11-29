@@ -91,9 +91,16 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="fspv" class="col-3 col-form-label">FSSPV CODE</label>
+                        <label for="fspv" class="col-3 col-form-label">SPV Code</label>
                         <div class="col-9">
-                            <input type="text" name="fspv" id="fspv" required placeholder="FSSPV CODE" class="form-control">
+                            <select name="fspv" id="fspv" required class="selectpicker" data-live-search="true" 
+                                    data-selected-text-format="values" title="Please choose.." data-style="btn-light">
+                                <?php
+                                    foreach($list_spv as $s){
+                                        echo '<option value="'.$s["code"].'">'.$s["name"].'</option>';
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
