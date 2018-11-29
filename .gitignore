@@ -32,3 +32,4 @@ rsc/*
 well-known/*
 */config/*
 local.txt
+web.config
