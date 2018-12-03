@@ -463,9 +463,15 @@ class CFsltocwh extends BaseController
         $arrWhere = array();
         $success_response = array();
         $error_response = array();
+        $fcode = '';
         
-        $fcode = $this->repo;
+        //$fcode = $this->repo;
+        $fpurpose = $this->input->post('fpurpose', TRUE);
         $fpartnum = $this->input->post('fpartnum', TRUE);
+        switch($fpurpose){
+            case 'RBS' : $fcode = 'wsps_badstock';break;
+            default : $fcode = 'wsps_badpart';break;
+        }
         
         $arrWhere = array('fcode'=>$fcode, 'fpartnum'=>$fpartnum);
         
@@ -506,10 +512,21 @@ class CFsltocwh extends BaseController
                 $response = $error_response;
             }
         }else{
-            $error_response = array(
-                'status' => 2,
-                'message'=> 'Stock not available'
-            );
+            $partname = $this->get_info_part_name($fpartnum);
+            if(!empty($partname)){
+                $insert = $this->insert_part_stock($fcode, $fpartnum);
+                $success_response = array(
+                    'status' => 1,
+                    'stock'=> $stock,
+                    'message'=> 'OK'
+                );
+                $response = $success_response;
+            }else{
+                $error_response = array(
+                    'status' => 2,
+                    'message'=> 'Part not available'
+                );
+            }
             $response = $error_response;
         }
         
@@ -1580,6 +1597,32 @@ class CFsltocwh extends BaseController
         $arrWhere = array();
     }
     
+    /**
+     * Function to get info cart
+     * @var fcode as table name prefix code
+     * @var fpartnum
+     * @var initval is optional
+     */
+    private function insert_part_stock($fcode,$fpartnum, $initval = '3'){
+        $ret = FALSE;
+        $dataInfo = array(
+            'fcode'      => strtoupper($fcode),
+            'fpartnum'   => $fpartnum,
+            'fminval'    => 3,
+            'finitval'   => $initval,
+            'flastval'   => 0,
+            'fflag'      => 'Y',
+        );
+        
+        $rs_data = send_curl($this->security->xss_clean($dataInfo), $this->config->item('api_add_part_stock'), 'POST', FALSE);
+        if(is_object($rs_data)){
+            if($rs_data->status){
+                $ret = TRUE;
+            }
+        }
+        
+        return $ret;
+    }
     
     
     
