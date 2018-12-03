@@ -254,6 +254,202 @@ class CStockPart extends BaseController
     }
 
     /**
+     * This function used to load the first screen of the user
+     */
+    public function repairbad()
+    {        
+        $this->global['pageTitle'] = 'List Stock - '.APP_NAME;
+        $this->global['pageMenu'] = 'List Stock';
+        $this->global['contentHeader'] = 'List Stock';
+        $this->global['contentTitle'] = 'List Stock';
+        $this->global ['role'] = $this->role;
+        $this->global ['name'] = $this->name;
+        $this->global ['repo'] = $this->repo;
+
+        $data['classname'] = $this->cname;
+        $data['hashub'] = $this->hasHub;
+        if($this->hasHub){
+            $data['list_warehouse'] = $this->get_list_warehouse();
+        }
+        $data['url_list'] = base_url($this->cname.'/badpart-list/json');
+        $data['url_list_detail'] = base_url($this->cname.'/detail-list');
+        $this->loadViews($this->view_dir.'index-badpart', $this->global, $data);
+    }
+    
+    /**
+     * This function is used to get list for datatables
+     */
+    public function get_badpart_list($type){
+        $rs = array();
+        $arrWhere = array();
+        $data = array();
+        $output = null;
+        $isParam = FALSE;
+        
+        $fcode = "dnrc_badpart";
+        $arrWhere['fcode'] = $fcode;
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_detail_fsl_stock'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        switch($type) {
+            case "json":
+                foreach ($rs as $r) {
+                    $id = filter_var($r->stock_id, FILTER_SANITIZE_NUMBER_INT);
+                    $code = filter_var($r->stock_fsl_code, FILTER_SANITIZE_STRING);
+                    $partno = filter_var($r->stock_part_number, FILTER_SANITIZE_STRING);
+                    $partname = filter_var($r->part_name, FILTER_SANITIZE_STRING);
+                    $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
+                    $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
+                    $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
+                    $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
+
+                    $row['code'] = $code;
+                    $row['partno'] = $partno;
+                    $row['partname'] = $partname;
+                    $row['initstock'] = $initstock;
+                    $row['minstock'] = $minstock;
+                    if($initflag === "Y"){
+                        $row['stock'] = $initstock;
+                    }else{
+                        $row['stock'] = $stock;
+                    }
+
+                    $data[] = $row;
+                }
+                $output = $this->output
+                        ->set_content_type('application/json')
+                        ->set_output(json_encode(array('data'=>$data)));
+            break;
+            case "array":
+                foreach ($rs as $r) {
+                    $id = filter_var($r->stock_id, FILTER_SANITIZE_NUMBER_INT);
+                    $code = filter_var($r->stock_fsl_code, FILTER_SANITIZE_STRING);
+                    $partno = filter_var($r->stock_part_number, FILTER_SANITIZE_STRING);
+                    $partname = filter_var($r->part_name, FILTER_SANITIZE_STRING);
+                    $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
+                    $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
+                    $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
+                    $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
+
+                    $row['code'] = $code;
+                    $row['partno'] = $partno;
+                    $row['partname'] = $partname;
+                    $row['initstock'] = $initstock;
+                    $row['minstock'] = $minstock;
+                    if($initflag === "Y"){
+                        $row['stock'] = $initstock;
+                    }else{
+                        $row['stock'] = $stock;
+                    }
+
+                    $data[] = $row;
+                }
+                $output = $data;
+            break;
+        }
+        return $output;
+    }
+
+    /**
+     * This function used to load the first screen of the user
+     */
+    public function repairstock()
+    {        
+        $this->global['pageTitle'] = 'List Stock Bad Stock - '.APP_NAME;
+        $this->global['pageMenu'] = 'List Stock Bad Stock';
+        $this->global['contentHeader'] = 'List Stock Bad Stock';
+        $this->global['contentTitle'] = 'List Stock Bad Stock';
+        $this->global ['role'] = $this->role;
+        $this->global ['name'] = $this->name;
+        $this->global ['repo'] = $this->repo;
+
+        $data['classname'] = $this->cname;
+        $data['hashub'] = $this->hasHub;
+        if($this->hasHub){
+            $data['list_warehouse'] = $this->get_list_warehouse();
+        }
+        $data['url_list'] = base_url($this->cname.'/badstock-list/json');
+        $data['url_list_detail'] = base_url($this->cname.'/detail-list');
+        $this->loadViews($this->view_dir.'index-badstock', $this->global, $data);
+    }
+    
+    /**
+     * This function is used to get list for datatables
+     */
+    public function get_badstock_list($type){
+        $rs = array();
+        $arrWhere = array();
+        $data = array();
+        $output = null;
+        $isParam = FALSE;
+        
+        $fcode = "dnrc_badstock";
+        $arrWhere['fcode'] = $fcode;
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_detail_fsl_stock'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        switch($type) {
+            case "json":
+                foreach ($rs as $r) {
+                    $id = filter_var($r->stock_id, FILTER_SANITIZE_NUMBER_INT);
+                    $code = filter_var($r->stock_fsl_code, FILTER_SANITIZE_STRING);
+                    $partno = filter_var($r->stock_part_number, FILTER_SANITIZE_STRING);
+                    $partname = filter_var($r->part_name, FILTER_SANITIZE_STRING);
+                    $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
+                    $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
+                    $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
+                    $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
+
+                    $row['code'] = $code;
+                    $row['partno'] = $partno;
+                    $row['partname'] = $partname;
+                    $row['initstock'] = $initstock;
+                    $row['minstock'] = $minstock;
+                    if($initflag === "Y"){
+                        $row['stock'] = $initstock;
+                    }else{
+                        $row['stock'] = $stock;
+                    }
+
+                    $data[] = $row;
+                }
+                $output = $this->output
+                        ->set_content_type('application/json')
+                        ->set_output(json_encode(array('data'=>$data)));
+            break;
+            case "array":
+                foreach ($rs as $r) {
+                    $id = filter_var($r->stock_id, FILTER_SANITIZE_NUMBER_INT);
+                    $code = filter_var($r->stock_fsl_code, FILTER_SANITIZE_STRING);
+                    $partno = filter_var($r->stock_part_number, FILTER_SANITIZE_STRING);
+                    $partname = filter_var($r->part_name, FILTER_SANITIZE_STRING);
+                    $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
+                    $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
+                    $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
+                    $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
+
+                    $row['code'] = $code;
+                    $row['partno'] = $partno;
+                    $row['partname'] = $partname;
+                    $row['initstock'] = $initstock;
+                    $row['minstock'] = $minstock;
+                    if($initflag === "Y"){
+                        $row['stock'] = $initstock;
+                    }else{
+                        $row['stock'] = $stock;
+                    }
+
+                    $data[] = $row;
+                }
+                $output = $data;
+            break;
+        }
+        return $output;
+    }
+
+    /**
      * This function is used to get list for datatables
      */
     public function get_list($type){

@@ -142,6 +142,8 @@ $route['spareparts-sub/list-sub'] = 'front/cpartsub/get_list_part_sub';
 // ===========================
 $route['spareparts-stock/view'] = 'front/cstockpart';
 $route['spareparts-stock/view-central'] = 'front/cstockpart/central';
+$route['spareparts-stock/view-repair-bad'] = 'front/cstockpart/repairbad';
+$route['spareparts-stock/view-repair-stock'] = 'front/cstockpart/repairstock';
 $route['spareparts-stock/add'] = 'front/cstockpart/add';
 $route['spareparts-stock/insert'] = 'front/cstockpart/create';
 $route['spareparts-stock/edit/(:any)'] = 'front/cstockpart/edit/$1';
@@ -150,6 +152,8 @@ $route['spareparts-stock/remove/(:any)'] = 'front/cstockpart/delete/$1';
 $route['spareparts-stock/list/([a-zA-Z]+)'] = 'front/cstockpart/get_list/$1';
 $route['spareparts-stock/onhand-list/([a-zA-Z]+)'] = 'front/cstockpart/get_onhand_list/$1';
 $route['spareparts-stock/central-list/([a-zA-Z]+)'] = 'front/cstockpart/get_central_list/$1';
+$route['spareparts-stock/badpart-list/([a-zA-Z]+)'] = 'front/cstockpart/get_badpart_list/$1';
+$route['spareparts-stock/badstock-list/([a-zA-Z]+)'] = 'front/cstockpart/get_badstock_list/$1';
 $route['spareparts-stock/detail-list'] = 'front/cstockpart/get_list_detail';
 $route['spareparts-stock/list-nearby'] = 'front/cstockpart/get_part_nearby';
 $route['spareparts-stock/check-part'] = 'front/cstockpart/check_part';
