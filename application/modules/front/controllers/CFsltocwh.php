@@ -505,11 +505,12 @@ class CFsltocwh extends BaseController
                 );
                 $response = $success_response;
             }else{
-                $error_response = array(
-                    'status' => 0,
-                    'message'=> 'Part Not Found'
+                $success_response = array(
+                    'status' => 1,
+                    'stock'=> $stock,
+                    'message'=> 'OK'
                 );
-                $response = $error_response;
+                $response = $success_response;
             }
         }else{
             $partname = $this->get_info_part_name($fpartnum);
