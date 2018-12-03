@@ -254,8 +254,8 @@
                                     <li><a href="<?php echo base_url("view-incoming-trans");?>">Incoming</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view");?>">Stock in FSL</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view-central");?>">Stock in Central Warehouse</a></li>
-                                    <li><a href="<?php echo base_url("spareparts-stock/view-badpart");?>">Stock in Repair Badpart</a></li>
-                                    <li><a href="<?php echo base_url("spareparts-stock/view-badstock");?>">Stock in Repair Badstock</a></li>
+                                    <li><a href="<?php echo base_url("spareparts-stock/view-repair-bad");?>">Stock in Repair Badpart</a></li>
+                                    <li><a href="<?php echo base_url("spareparts-stock/view-repair-stock");?>">Stock in Repair Badstock</a></li>
                                 </ul>
                             </li>
                             <li class="has-submenu">
