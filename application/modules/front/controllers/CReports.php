@@ -572,6 +572,7 @@ class CReports extends BaseController
                     $last_stock = filter_var($row->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
     //                $notes = $row->o_delivery_notes === "" ? "-" : filter_var($row->o_delivery_notes, FILTER_SANITIZE_STRING);
                     $notes = "-";
+                    $replenish = ($last_stock > $min_stock)?0:$min_stock - $last_stock;
 
                     //set column width auto size
                     $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -586,7 +587,7 @@ class CReports extends BaseController
                     $activeSheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                     //fill data row
-                    $replenish = ($last_stock > $min_stock)?0:$min_stock - $last_stock;
+                    
                     $activeSheet
                     ->setCellValue('A'.$i, $partnum)
                     ->setCellValue('B'.$i, $partname)
@@ -594,7 +595,7 @@ class CReports extends BaseController
                     ->setCellValue('D'.$i, $min_stock)
                     ->setCellValue('E'.$i, $last_stock)
                     ->setCellValue('F'.$i, $replenish)
-                    ->setCellValue('F'.$i, $notes);
+                    ->setCellValue('G'.$i, $notes);
 
                     $i++;
                 }
