@@ -547,7 +547,7 @@ class CReports extends BaseController
                 $activeSheet
                 ->setCellValue('A4', 'Requested PN')
                 ->setCellValue('B4', 'Description')
-                ->setCellValue('C4', 'Qty')
+                ->setCellValue('C4', 'Usage')
                 ->setCellValue('D4', 'Minimum Stock')
                 ->setCellValue('E4', 'Last Stock')
                 ->setCellValue('F4', 'Replenish')
@@ -585,6 +585,7 @@ class CReports extends BaseController
                     $activeSheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $activeSheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $activeSheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $activeSheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                     //fill data row
                     
