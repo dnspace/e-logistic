@@ -550,9 +550,10 @@ class CReports extends BaseController
                 ->setCellValue('C4', 'Qty')
                 ->setCellValue('D4', 'Minimum Stock')
                 ->setCellValue('E4', 'Last Stock')
-                ->setCellValue('F4', 'Delivery Notes')
+                ->setCellValue('F4', 'Replenish')
+                ->setCellValue('G4', 'Delivery Notes')
                 ;
-                $activeSheet->getStyle('A4:F4')->applyFromArray($styleHeaderArray);
+                $activeSheet->getStyle('A4:G4')->applyFromArray($styleHeaderArray);
 
                 //Parameters for cURL
 //                $arrWhere = array('fcode'=> strtoupper($fcode), 'fdate1'=> $fdate1.' 00:00:00', 'fdate2'=> $fdate2.' 23:59:59');
@@ -579,17 +580,20 @@ class CReports extends BaseController
                     $activeSheet->getColumnDimension('D')->setAutoSize(true);
                     $activeSheet->getColumnDimension('E')->setAutoSize(true);
                     $activeSheet->getColumnDimension('F')->setAutoSize(true);
+                    $activeSheet->getColumnDimension('G')->setAutoSize(true);
                     $activeSheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $activeSheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $activeSheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                     //fill data row
+                    $replenish = ($last_stock > $min_stock)?0:$min_stock - $last_stock;
                     $activeSheet
                     ->setCellValue('A'.$i, $partnum)
                     ->setCellValue('B'.$i, $partname)
                     ->setCellValue('C'.$i, $qty)
                     ->setCellValue('D'.$i, $min_stock)
                     ->setCellValue('E'.$i, $last_stock)
+                    ->setCellValue('F'.$i, $replenish)
                     ->setCellValue('F'.$i, $notes);
 
                     $i++;
