@@ -572,7 +572,7 @@ class CReports extends BaseController
                     $last_stock = filter_var($row->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
     //                $notes = $row->o_delivery_notes === "" ? "-" : filter_var($row->o_delivery_notes, FILTER_SANITIZE_STRING);
                     $notes = "-";
-                    $replenish = ($min_stock != 0)?(($last_stock > $min_stock)?0:$min_stock - $last_stock):$qty - $min_stock;
+                    $replenish = ($min_stock != 0)?(($last_stock > $min_stock)?0:$min_stock - $last_stock):$qty - $last_stock;
 
                     //set column width auto size
                     $activeSheet->getColumnDimension('A')->setAutoSize(true);
