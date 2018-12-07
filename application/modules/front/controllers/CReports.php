@@ -584,7 +584,7 @@ class CReports extends BaseController
                             if($qty > $last_stock){
                                 $replenish = $qty - $last_stock;
                             }else{
-                                $replenish = $last_stock - $qty;
+                                $replenish = 0;
                             }
                             
                         }else{
