@@ -374,7 +374,7 @@ $config['api_clear_repairorder_cart'] = constant('urlapi').'api/cprepairorder/de
 // ===========================
 
 // ===========================
-//  END POINT FOR REPAIR TO CWH
+//  Begin Procedure
 // ===========================
 
 //api trans
@@ -402,6 +402,16 @@ $config['api_incoming_cwh_total_cart']  = constant('urlapi').'api/ccwhincomingca
 $config['api_incoming_cwh_delete_cart'] = constant('urlapi').'api/ccwhincomingcart/delete_cart/'; //POST
 $config['api_incoming_cwh_clear_cart']  = constant('urlapi').'api/ccwhincomingcart/delete_multi_cart/'; //POST
 $config['api_incoming_cwh_update_cart'] = constant('urlapi').'api/ccwhincomingcart/update_cart/'; //POST
+// ===========================
+//  End Procedure
+// ===========================
+
+// ===========================
+//  Begin Procedure
+// ===========================
+
+$config['api_list_report_cwh'] = constant('urlapi').'api/creportcwh/list/'; //POST
+
 // ===========================
 //  End Procedure
 // ===========================
