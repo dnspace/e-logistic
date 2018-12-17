@@ -487,6 +487,14 @@ $route['search-parts'] = 'front/csearchparts';
 // ===========================
 
 // ===========================
+//  Search Parts
+// ===========================
+$route['report-ticket-cwh'] = 'front/creportcwh';
+// ===========================
+//  End Routing search Parts
+// ===========================
+
+// ===========================
 //  Routing Front Incoming Trans
 // ===========================
 $route['incoming-trans'] = 'front/cincoming';
