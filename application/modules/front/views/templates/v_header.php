@@ -281,6 +281,7 @@
                                 <ul class="submenu">
                                     <li><a href="<?php echo base_url("report/consumed-parts");?>">Transacted Part</a></li>
                                     <li><a href="<?php echo base_url("report/used-parts");?>">Used Part</a></li>
+                                    <li><a href="<?php echo base_url("report-ticket-cwh");?>">Complete Ticket</a></li>
                                     <li><a href="<?php echo base_url("report/replenish-plan");?>">Replenishment Plan</a></li>
                                     <li><a href="<?php echo base_url("view-outgoing-trans");?>">Outgoing</a></li>
                                     <li><a href="<?php echo base_url("view-incoming-trans");?>">Incoming</a></li>
