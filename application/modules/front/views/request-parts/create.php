@@ -1258,7 +1258,7 @@
                     alert('Please fill in this field!');
                     e_partnum.focus();
                 }else{
-                    if (/^[0-9A-Za-z]+$/.test(e_partnum.val())){
+                    if (/^[0-9A-Za-z\s]+$/.test(e_partnum.val())){
                         check_part(e_partnum.val());
                     }else{
                         alert('Spare part number contained by unknown characters!');
