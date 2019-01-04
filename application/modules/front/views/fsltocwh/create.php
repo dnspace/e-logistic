@@ -50,6 +50,7 @@
                                             <option value="POS">POS</option>
                                             <option value="JNE">JNE</option>
                                             <option value="YCH">YCH</option>
+                                            <option value="REX">REX</option>
                                             <option value="INTCOURIER">Internal Courier</option>
                                         </select>
                                         <span class="text-danger" id="msg_fdeliveryby"></span>
