@@ -156,7 +156,7 @@ class CSupplyFromFSLBad extends BaseController{
         }
         
         //Parse Data for cURL
-        $rs_data = send_curl($arrWhere, $this->config->item('api_list_fsltocwh_close'), 'POST', FALSE);
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_fsltocwh'), 'POST', FALSE);
         $rs = $rs_data->status ? $rs_data->result : array();
         
         $data = array();
