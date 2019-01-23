@@ -285,6 +285,7 @@
                                     <li><a href="<?php echo base_url("report/replenish-plan");?>">Replenishment Plan</a></li>
                                     <li><a href="<?php echo base_url("view-outgoing-trans");?>">Outgoing</a></li>
                                     <li><a href="<?php echo base_url("view-incoming-trans");?>">Incoming</a></li>
+                                    <li><a href="<?php echo base_url("report/all-stock");?>">Stock in FSL Multiple Choice</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view");?>">Stock in FSL</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view-central");?>">Stock in Central Warehouse</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view-repair-bad");?>">Stock in Repair Badpart</a></li>

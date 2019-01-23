@@ -543,6 +543,14 @@ $route['report/replenish-plan/print'] = 'front/creports/export_replenish_plan';
 // ===========================
 
 // ===========================
+//  Routing Front Reports Stock
+// ===========================
+$route['report/all-stock'] = 'front/creportsstock/report_all_stock';
+// ===========================
+//  End Routing Front Reports STock
+// ===========================
+
+// ===========================
 //  Routing Front History
 // ===========================
 $route['history-outgoing'] = 'front/chistorytrans/history_outgoing';
