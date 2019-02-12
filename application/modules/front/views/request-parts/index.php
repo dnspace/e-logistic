@@ -136,6 +136,7 @@
                                     <th>Qty</th>
                                     <?php
                                     if($hashub){
+                                        echo "<th>Partner</th>";
                                         echo "<th>FSL Location</th>";
                                     }
                                     ?>
@@ -260,6 +261,7 @@
                 <?php
                 if($hashub){
                 ?>
+                { "data": 'partner' },
                 { "data": 'fsl_location' },
                 <?php
                 }

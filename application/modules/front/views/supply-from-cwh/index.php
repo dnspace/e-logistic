@@ -42,6 +42,16 @@
                 <?php
                     }
                 ?>
+                <div class="form-group row">
+                    <div class="input-group col-sm-12">
+                        <select name="fstatus" id="fstatus" class="form-control" placeholder="By Status">
+                            <option value="">By Status</option>
+                            <option value="open">Open</option>
+                            <option value="pending">Pending</option>
+                            <option value="complete">Complete</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="button" id="btn_search" class="btn btn-primary waves-effect waves-light">
@@ -168,12 +178,15 @@
 <script type="text/javascript">
     var e_date1 = $('#fdate1');
     var e_date2 = $('#fdate2');
+    var e_coverage = $('#fcoverage');
     var e_status = $('#fstatus');
     var table1;
     
     function init_form(){
         e_date1.val('');
         e_date2.val('');
+        e_coverage.val('');
+        e_coverage.selectpicker('refresh');
         e_status.val('');
     }
 
@@ -388,6 +401,7 @@
                     d.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>";
                     d.fdate1 = e_date1.val();
                     d.fdate2 = e_date2.val();
+                    d.fcoverage = e_coverage.val();
                     d.fstatus = e_status.val();
                 }
             },

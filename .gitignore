@@ -1,4 +1,5 @@
 */config/development
+*/config/production
 */logs/log-*.php
 !*/logs/index.html
 */cache/*
@@ -15,13 +16,11 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
-application/config/database.php
 
 #netbeans specific
 nbproject/*
 nbproject/private/
 nbproject/private/private.xml
-application/config/main_endpoint.php
 *.pdf
 
 #temporary files
@@ -31,3 +30,6 @@ nbproject/private/private.xml
 json/*
 rsc/*
 well-known/*
+*/config/*
+local.txt
+web.config

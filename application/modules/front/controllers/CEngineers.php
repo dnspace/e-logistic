@@ -23,8 +23,10 @@ class CEngineers extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isWebAdmin()){
+        if($this->isSpv() || $this->isWebAdmin()){
             $this->readonly = FALSE;
+            $this->hasHub = TRUE;
+            $this->hasCoverage = TRUE;
         }else{
             $this->readonly = TRUE;
         }
@@ -190,6 +192,32 @@ class CEngineers extends BaseController
         
         return $data;
     }
+
+    /**
+     * This function is used to get list information described by function name
+     */
+    public function get_list_spvs(){
+        $rs = array();
+        $arrWhere = array();
+        
+        $arrWhere = array('fgroup'=>'spv', 'f_isadmin'=>0);
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_users'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        $data = array();
+        foreach ($rs as $r) {
+            $key = filter_var($r->user_key, FILTER_SANITIZE_STRING);
+            $name = filter_var($r->user_fullname, FILTER_SANITIZE_STRING);
+
+            $row['code'] = $key;
+            $row['name'] = $name;
+ 
+            $data[] = $row;
+        }
+        
+        return $data;
+    }
     
     /**
      * This function is used to get list information described by function name
@@ -311,7 +339,7 @@ class CEngineers extends BaseController
      */
     function add()
     {
-        if($this->isWebAdmin()){
+        if($this->isSpv() || $this->isWebAdmin()){
             $this->global['pageTitle'] = "Add New Engineer - ".APP_NAME;
             $this->global['pageMenu'] = 'Add New Engineer';
             $this->global['contentHeader'] = 'Add New Engineer';
@@ -323,6 +351,7 @@ class CEngineers extends BaseController
             $data['classname'] = $this->cname;
             $data['list_partner'] = $this->get_list_partners();
             $data['list_wr'] = $this->get_list_warehouse();
+            $data['list_spv'] = $this->get_list_spvs();
             $data['default_pass'] = strtoupper(generateRandomString());
             $this->loadViews($this->view_dir.'create', $this->global, $data);
         }else{
@@ -388,6 +417,7 @@ class CEngineers extends BaseController
             $data['records'] = $this->get_edit($fkey);
             $data['list_partner'] = $this->get_list_partners();
             $data['list_wr'] = $this->get_list_warehouse();
+            $data['list_spv'] = $this->get_list_spvs();
 
             $this->loadViews($this->view_dir.'edit', $this->global, $data);
         }else{

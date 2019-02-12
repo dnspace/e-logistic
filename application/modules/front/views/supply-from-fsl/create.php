@@ -269,7 +269,7 @@
                     data      : null,
                     render    : function ( data, type, full, meta ) {
                         var html = '';
-                        if(isEmpty(data)){
+                        if(isEmpty(data) || data == "-"){
                             html = '<a href="javascript:void(0)" title="Change Status" id="btn_edit"><i class="fa fa-pencil"></i> Change Status</a>';
                         }else{
                             var status = full.status.toUpperCase();
@@ -298,6 +298,7 @@
                 // if(table2.rows().count() < 1){
                 //     update_detail_status_all(ftransout, "complete");
                 // }
+                table.ajax.reload();
             },
             rowCallback: function( row, data, index ) {
                 fid = data.id;
@@ -308,7 +309,7 @@
                 fcomplete = "complete";
                 fnotes = data.notes;
 
-                if(isEmpty(fstatus)){
+                if(isEmpty(fstatus) || fstatus == "-"){
                     update_detail_status(fid, fpartnum, fserialnum, fcomplete, fnotes);
                 }else if(fstatus == "incomplete"){
                     arrStatus.push(fstatus);

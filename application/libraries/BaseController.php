@@ -203,6 +203,17 @@ class BaseController extends CI_Controller {
             return false;
         }
     }
+
+    /**
+     * This function is used to check the access
+     */
+    function isSuperStaff() {
+        if ($this->role == ROLE_AV) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     /**
      * This function is used to check the access

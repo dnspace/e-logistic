@@ -132,20 +132,6 @@
                             <li class="has-submenu">
                                 <a href="#"><i class="mdi mdi-book-open"></i>Transaction</a>
                                 <ul class="submenu">
-                                    <!--
-                                    <li>
-                                        <a href="<?php echo base_url("incoming-trans");?>">Incoming Parts</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url("outgoing-trans");?>">Outgoing Parts</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url("request-parts/view");?>">Request Parts</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo base_url("transfer-stock-to-fsl/view");?>">Transfer Stock to FSL</a>
-                                    </li>
-                                    -->
                                     <li>
                                         <a href="<?php echo base_url("outgoing-trans/dashboard");?>">Outgoing Parts</a>
                                     </li>
@@ -154,25 +140,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--
-                            <li class="has-submenu">
-                                <a href="#"><i class="icon-handbag"></i>Transaction</a>
-                                <ul class="submenu">
-                                    <li class="has-submenu">
-                                        <a href="#">Outgoing Parts</a>
-                                        <ul class="submenu">
-                                            <li><a href="<?php echo base_url("request-parts/view");?>">Request Parts</a></li>
-                                            <li><a href="<?php echo base_url("transfer-stock-to-fsl/view");?>">Transfer Stock to FSL</a></li>      
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            -->
                             <?php
                             }
-                            ?>
-                            
-                            <?php
                             if(($role == ROLE_SPV)){
                             ?>
                             <li class="has-submenu">
@@ -196,6 +165,24 @@
                             </li>
                             <?php
                             }
+                            if(($role == ROLE_AV)){
+                            ?>
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-database"></i>Master</a>
+                                <ul class="submenu">
+                                    <li><a href="<?php echo base_url("spareparts/view");?>">Check Stock</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-book-open"></i>Transaction</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="#">Booking Parts</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                            }
                             ?>
                             <?php
                             if(($role == ROLE_CT)){
@@ -209,8 +196,6 @@
                             </li>
                             <?php
                             }
-                            ?>
-                            <?php
                             if(($role == ROLE_AM)){
                             ?>
                             <li class="has-submenu">
@@ -223,21 +208,8 @@
                                     <li><a href="<?php echo base_url("atm/view");?>">ATM Locations</a></li>
                                 </ul>
                             </li>
-                            <!--
-                            <li class="has-submenu">
-                                <a href="#"><i class="icon-magnifier"></i>Search</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="<?php echo base_url("search-parts");?>">Part and Subtitution</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            -->
                             <?php
                             }
-                            ?>
-                            
-                            <?php
                             if(($role == ROLE_SU)){
                             ?>
                             <li class="has-submenu">
@@ -261,9 +233,6 @@
                             </li>
                             <?php
                             }
-                            ?>
-                            
-                            <?php
                             if(($role == ROLE_WA)){
                             ?>
                             <li class="has-submenu">
@@ -283,7 +252,6 @@
                                 <ul class="submenu">
                                     <li><a href="<?php echo base_url("supply-from-vendor-trans");?>">Supply from Vendor</a></li>
                                     <li><a href="<?php echo base_url("supply-from-repair-trans");?>">Supply from Repair Center</a></li>
-                                    <li><a href="<?php echo base_url("supply-from-fsl");?>">Supply from FSL</a></li>
                                     <li><a href="<?php echo base_url("supply-from-fsl-bad");?>">Supply from FSL Bad Part/Stock</a></li>
                                     <!-- <li><a href="<?php echo base_url("supply-to-repair-trans");?>">Repair Order</a></li> -->
                                     <li><a href="<?php echo base_url("delivery-note-trans");?>">Send Parts to FSL</a></li>
