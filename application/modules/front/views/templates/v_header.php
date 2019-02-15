@@ -127,7 +127,7 @@
                             </li>
                             
                             <?php
-                            if(($role == ROLE_SPV || $role == ROLE_AM)){
+                            if(($role == ROLE_SPV || $role == ROLE_AM || $role == ROLE_CT)){
                             ?>
                             <li class="has-submenu">
                                 <a href="#"><i class="mdi mdi-book-open"></i>Transaction</a>
@@ -179,6 +179,19 @@
                                     <li>
                                         <a href="#">Booking Parts</a>
                                     </li>
+                                </ul>
+                            </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(($role == ROLE_CT)){
+                            ?>
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-book-multiple"></i>Report</a>
+                                <ul class="submenu">
+                                    <li><a href="<?php echo base_url("report/consumed-parts");?>">Transacted Part</a></li>
+                                    <li><a href="<?php echo base_url("report/used-parts");?>">Used Part</a></li>
                                 </ul>
                             </li>
                             <?php
