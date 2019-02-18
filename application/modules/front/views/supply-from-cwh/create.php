@@ -641,9 +641,10 @@
 
         $("#btn_close").on("click", function(e){
             $("#btn_close").attr('disabled',true);
-            $("#btn_close").text('Please Wait..');
+            $("#btn_close").text('Complete');
             var state = $( this ).text().toLowerCase().trim();
             complete_trans(state);
+            
         });
     });
 </script>
