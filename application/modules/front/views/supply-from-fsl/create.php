@@ -671,7 +671,6 @@
         $("#btn_close").on("click", function(e){
             var state = $( this ).text().toLowerCase().trim();
             $("#btn_close").attr('disabled',true);
-            $("#btn_close").text('Please Wait..');
             // alert("State:"+state);
             complete_trans(state);
         });
