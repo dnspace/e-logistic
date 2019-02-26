@@ -127,7 +127,7 @@
                             </li>
                             
                             <?php
-                            if(($role == ROLE_SPV || $role == ROLE_AM)){
+                            if(($role == ROLE_SPV || $role == ROLE_AM || $role == ROLE_CT)){
                             ?>
                             <li class="has-submenu">
                                 <a href="#"><i class="mdi mdi-book-open"></i>Transaction</a>
@@ -179,6 +179,19 @@
                                     <li>
                                         <a href="#">Booking Parts</a>
                                     </li>
+                                </ul>
+                            </li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(($role == ROLE_CT)){
+                            ?>
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-book-multiple"></i>Report</a>
+                                <ul class="submenu">
+                                    <li><a href="<?php echo base_url("report/consumed-parts");?>">Transacted Part</a></li>
+                                    <li><a href="<?php echo base_url("report/used-parts");?>">Used Part</a></li>
                                 </ul>
                             </li>
                             <?php
@@ -253,6 +266,7 @@
                                     <li><a href="<?php echo base_url("report/replenish-plan");?>">Replenishment Plan</a></li>
                                     <li><a href="<?php echo base_url("view-outgoing-trans");?>">Outgoing</a></li>
                                     <li><a href="<?php echo base_url("view-incoming-trans");?>">Incoming</a></li>
+                                    <li><a href="<?php echo base_url("report/all-stock");?>">Stock in FSL Multiple Choice</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view");?>">Stock in FSL</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view-central");?>">Stock in Central Warehouse</a></li>
                                     <li><a href="<?php echo base_url("spareparts-stock/view-repair-bad");?>">Stock in Repair Badpart</a></li>

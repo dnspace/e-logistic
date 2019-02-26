@@ -233,6 +233,9 @@ $config['api_detail_outgoings'] = constant('urlapi').'api/cprocedures/list_detai
 $config['api_daily_reports'] = constant('urlapi').'api/cpreports/list_outgoing_daily_reports/'; //POST
 $config['api_used_reports'] = constant('urlapi').'api/cpreports/list_outgoing_used_part/'; //POST
 $config['api_replenish_plan'] = constant('urlapi').'api/cpreports/list_outgoing_replenish_plan/'; //POST
+$config['api_list_on_hand'] = constant('urlapi').'api/cpreports/list_on_hand/'; //POST
+$config['api_list_parts_report'] = constant('urlapi').'api/cpreports/list_parts/'; //POST
+
 // ===========================
 //  End Procedure
 // ===========================

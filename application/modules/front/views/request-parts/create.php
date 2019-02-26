@@ -1166,7 +1166,7 @@
                     alert('Please fill out the ticket number!');
                     e_ticketnum.focus();
                 }else{
-                    if (e_ticketnum.val().match("^5")) {
+                    if (e_ticketnum.val().match("^5|^6")) {
                         if(len !== 8){
                             alert('Ticket number must be 8 digits');
                             e_ticketnum.val('');
@@ -1178,7 +1178,7 @@
                             }
                         }
                     }else{
-                        alert('Ticket number not accepted! start typing by number 5!');
+                        alert('Ticket number not accepted! start typing by number 5 or 6!');
                         e_ticketnum.val('');
                         e_ticketnum.focus();
                     }
@@ -1258,7 +1258,7 @@
                     alert('Please fill in this field!');
                     e_partnum.focus();
                 }else{
-                    if (/^[0-9A-Za-z]+$/.test(e_partnum.val())){
+                    if (/^[0-9A-Za-z\s]+$/.test(e_partnum.val())){
                         check_part(e_partnum.val());
                     }else{
                         alert('Spare part number contained by unknown characters!');
