@@ -225,6 +225,14 @@ class BaseController extends CI_Controller {
             return false;
         }
     }
+
+    function isCtower(){
+        if($this->role== ROLE_CT){
+            return true;
+        }else{
+            return false;
+        }
+    }
 	
     /**
      * This function is used to load the set of views

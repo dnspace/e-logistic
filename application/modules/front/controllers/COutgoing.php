@@ -24,7 +24,7 @@ class COutgoing extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff()){
+        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff() || $this->isCtower()){
             if($this->isStaff()){
                 $this->readonly = FALSE;
             }elseif($this->isSpv()){
@@ -42,7 +42,7 @@ class COutgoing extends BaseController
      */
     public function index()
     {
-        if($this->isSpv()){
+        if($this->isSpv() || $this->isCtower()){
             redirect('view-outgoing-trans');
         }elseif($this->isStaff()){
             $this->global['pageTitle'] = 'Outgoing Transaction - '.APP_NAME;
