@@ -31,11 +31,11 @@ class CSupplyFromFSL extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isSpv() || $this->isStaff()){
+        if($this->isSpv() || $this->isStaff()||$this->isCtower()){
             if($this->isStaff()){
                 $this->readonly = FALSE;
                 $this->cart_sess = $this->session->userdata ( 'cart_session' ).$this->cart_postfix;
-            }elseif($this->isSpv()){
+            }elseif($this->isSpv()||$this->isCtower()){
                 $this->readonly = TRUE;
                 $this->hasHub = TRUE;
                 $this->hasCoverage = TRUE;

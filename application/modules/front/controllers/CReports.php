@@ -40,6 +40,9 @@ class CReports extends BaseController
         }elseif($this->isSpv()){
             $this->hasHub = TRUE;
             $this->hasCoverage = TRUE;
+        }elseif($this->isCtower()){
+            $this->hasHub = TRUE;
+            $this->hasCoverage = TRUE;
         }else{
             $this->readonly = TRUE;
         }

@@ -53,10 +53,10 @@ class CFsltocwh extends BaseController
             'delivery_type' => 'delivery_time_type',
             'eta' => $this->apirole.'_eta'
         );
-        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff()){
+        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff() || $this->isCtower()){
             if($this->isStaff()){
                 $this->readonly = FALSE;
-            }elseif($this->isSpv()){
+            }elseif($this->isSpv() || $this->isCtower()){
                 $this->readonly = TRUE;
                 $this->hasHub = TRUE;
                 $this->hasCoverage = TRUE;
