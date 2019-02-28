@@ -29,7 +29,7 @@ class CIncoming extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff()){
+        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff() || $this->isCtower()){
             if($this->isStaff()){
                 $this->readonly = FALSE;
             }elseif($this->isSpv()){
@@ -47,7 +47,7 @@ class CIncoming extends BaseController
      */
     public function index()
     {        
-        if($this->isSpv()){
+        if($this->isSpv() || $this->isCtower()){
             redirect('view-incoming-trans');
         }elseif($this->isStaff()){
             
