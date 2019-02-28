@@ -25,10 +25,10 @@ class CStockPart extends BaseController
     {
         parent::__construct();
         $this->isLoggedIn();
-        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff()){
+        if($this->isWebAdmin() || $this->isSpv() || $this->isStaff() || $this->isCtower()){
             if($this->isStaff()){
                 $this->readonly = FALSE;
-            }elseif($this->isSpv()){
+            }elseif($this->isSpv() || $this->isCtower()){
                 $this->readonly = TRUE;
                 $this->hasHub = TRUE;
                 $this->hasCoverage = TRUE;
