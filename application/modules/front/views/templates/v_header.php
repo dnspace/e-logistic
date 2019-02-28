@@ -192,6 +192,7 @@
                                 <ul class="submenu">
                                     <li><a href="<?php echo base_url("report/consumed-parts");?>">Transacted Part</a></li>
                                     <li><a href="<?php echo base_url("report/used-parts");?>">Used Part</a></li>
+                                    <li><a href="<?php echo base_url("spareparts-stock/view");?>">Stock</a></li>
                                 </ul>
                             </li>
                             <?php
