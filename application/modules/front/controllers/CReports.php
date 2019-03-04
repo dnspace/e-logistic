@@ -743,8 +743,8 @@ class CReports extends BaseController
                 $spreadsheet->setActiveSheetIndex($x);
                 $activeSheet = $spreadsheet->getActiveSheet();
                 
-                $activeSheet->mergeCells('A1:G1');
-                $activeSheet->mergeCells('A2:G2');
+                $activeSheet->mergeCells('A1:I1');
+                $activeSheet->mergeCells('A2:I2');
                 $activeSheet
                 ->setCellValue('A1', $fslname)
                 ->setCellValue('A2', 'Report Date: '.$reportdateID.' to '.$reportdateID2);
@@ -760,8 +760,9 @@ class CReports extends BaseController
                 ->setCellValue('F4', 'FSE ID')
                 ->setCellValue('G4', 'Assigned FSE')
                 ->setCellValue('H4', 'Created Date')
+                ->setCellValue('I4', 'Closed Date')
                 ;
-                $activeSheet->getStyle('A4:H4')->applyFromArray($styleHeaderArray);
+                $activeSheet->getStyle('A4:I4')->applyFromArray($styleHeaderArray);
 
                 //Parameters for cURL
                 $arrWhere = array('fcode'=> strtoupper($fcode), 'fdate1'=> $fdate1.' 00:00:00', 'fdate2'=> $fdate2.' 23:59:59');
@@ -780,6 +781,7 @@ class CReports extends BaseController
                     $engineer = filter_var($row->engineer_key, FILTER_SANITIZE_STRING);
                     $engineer_name = filter_var($row->engineer_name, FILTER_SANITIZE_STRING);
                     $created_at = filter_var($row->created_at, FILTER_SANITIZE_STRING);
+                    $closing_date = filter_var($row->closing_date, FILTER_SANITIZE_STRING);
 
                     //set column width auto size
                     $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -790,6 +792,7 @@ class CReports extends BaseController
                     $activeSheet->getColumnDimension('F')->setAutoSize(true);
                     $activeSheet->getColumnDimension('G')->setAutoSize(true);
                     $activeSheet->getColumnDimension('H')->setAutoSize(true);
+                    $activeSheet->getColumnDimension('I')->setAutoSize(true);
 //                    $activeSheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $activeSheet->getStyle('C')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     $activeSheet->getStyle('D')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
@@ -805,7 +808,9 @@ class CReports extends BaseController
                     ->setCellValue('E'.$i, $ticket)
                     ->setCellValue('F'.$i, $engineer)
                     ->setCellValue('G'.$i, $engineer_name)
-                    ->setCellValue('H'.$i, $created_at);
+                    ->setCellValue('H'.$i, $created_at)
+                    ->setCellValue('I'.$i, $closing_date)
+                    ;
 
                     $i++;
                 }
@@ -929,8 +934,8 @@ class CReports extends BaseController
                 $spreadsheet->setActiveSheetIndex($x);
                 $activeSheet = $spreadsheet->getActiveSheet();
                 
-                $activeSheet->mergeCells('A1:L1');
-                $activeSheet->mergeCells('A2:L2');
+                $activeSheet->mergeCells('A1:M1');
+                $activeSheet->mergeCells('A2:M2');
                 $activeSheet
                 ->setCellValue('A1', $fslname)
                 ->setCellValue('A2', 'Report Date: '.$reportdateID.' to '.$reportdateID2);
@@ -950,8 +955,9 @@ class CReports extends BaseController
                 ->setCellValue('J4', 'Assigned FSE')
                 ->setCellValue('K4', 'Partner')
                 ->setCellValue('L4', 'Created Date')
+                ->setCellValue('M4', 'Closing Date')
                 ;
-                $activeSheet->getStyle('A4:L4')->applyFromArray($styleHeaderArray);
+                $activeSheet->getStyle('A4:M4')->applyFromArray($styleHeaderArray);
 
                 //Parameters for cURL
                 $arrWhere = array('fcode'=> strtoupper($fcode), 'fdate1'=> $fdate1.' 00:00:00', 'fdate2'=> $fdate2.' 23:59:59');
@@ -968,6 +974,7 @@ class CReports extends BaseController
                     $transnum = filter_var($row->outgoing_num, FILTER_SANITIZE_STRING);
                     $ticket = filter_var($row->outgoing_ticket, FILTER_SANITIZE_STRING);
                     $createdate = filter_var($row->created_at, FILTER_SANITIZE_STRING);
+                    $closingdate = filter_var($row->closing_date, FILTER_SANITIZE_STRING);
                     $purpose = filter_var($row->outgoing_purpose, FILTER_SANITIZE_STRING);
                     $fereport = filter_var($row->fe_report, FILTER_SANITIZE_STRING);
                     $status = filter_var($row->status, FILTER_SANITIZE_STRING);
@@ -988,6 +995,7 @@ class CReports extends BaseController
                     $activeSheet->getColumnDimension('J')->setAutoSize(true);
                     $activeSheet->getColumnDimension('K')->setAutoSize(true);
                     $activeSheet->getColumnDimension('L')->setAutoSize(true);
+                    $activeSheet->getColumnDimension('M')->setAutoSize(true);
                     
                     $activeSheet->getStyle('C')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     $activeSheet->getStyle('E')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
@@ -1010,7 +1018,8 @@ class CReports extends BaseController
                     ->setCellValue('I'.$i, $engineer)
                     ->setCellValue('J'.$i, $engineer_name)
                     ->setCellValue('K'.$i, $partner_name)
-                    ->setCellValue('L'.$i, $createdate);
+                    ->setCellValue('L'.$i, $createdate)
+                    ->setCellValue('M'.$i, $closingdate);
                     $i++;
                 }
     //            $activeSheet->getHeaderFooter()
