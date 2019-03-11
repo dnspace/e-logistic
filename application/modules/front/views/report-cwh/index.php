@@ -88,6 +88,7 @@
                                 <th>Partner</th>
                                 <th>PN</th>
                                 <th>SN</th>
+                                <th>Closed Date</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -228,6 +229,7 @@
                 { "data": 'partner_name' },
                 { "data": 'part_number' },
                 { "data": 'serial_number' },
+                { "data": 'closing_date' },
             ],
             order: [[ 1, "desc" ]],
             columnDefs: [{ 
