@@ -73,6 +73,7 @@ class CReportCWH extends BaseController
             $row['partner_name']    = filter_var($r->partner_name, FILTER_SANITIZE_STRING);
             $row['part_number']     = filter_var($r->part_number, FILTER_SANITIZE_STRING);
             $row['serial_number']   = filter_var($r->serial_number, FILTER_SANITIZE_STRING);
+            $row['closing_date']    = filter_var($r->closing_date, FILTER_SANITIZE_STRING);
 //            $transdate = filter_var($r->outgoing_date, FILTER_SANITIZE_STRING);
             if(!empty($e_coverage)){
                 if(in_array($r->fsl_name, $e_coverage)){
