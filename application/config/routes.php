@@ -155,6 +155,7 @@ $route['spareparts-stock/central-list/([a-zA-Z]+)'] = 'front/cstockpart/get_cent
 $route['spareparts-stock/badpart-list/([a-zA-Z]+)'] = 'front/cstockpart/get_badpart_list/$1';
 $route['spareparts-stock/badstock-list/([a-zA-Z]+)'] = 'front/cstockpart/get_badstock_list/$1';
 $route['spareparts-stock/detail-list'] = 'front/cstockpart/get_list_detail';
+$route['spareparts-stock/detail-list-transit'] = 'front/cstockpart/get_list_detail_transit';
 $route['spareparts-stock/list-nearby'] = 'front/cstockpart/get_part_nearby';
 $route['spareparts-stock/check-part'] = 'front/cstockpart/check_part';
 // ===========================

@@ -62,6 +62,7 @@ class CStockPart extends BaseController
         }
         $data['url_list'] = base_url($this->cname.'/onhand-list/json');
         $data['url_list_detail'] = base_url($this->cname.'/detail-list');
+        $data['url_list_detail_transit'] = base_url($this->cname.'/detail-list-transit');
         $this->loadViews($this->view_dir.'index', $this->global, $data);
     }
     
@@ -100,6 +101,7 @@ class CStockPart extends BaseController
                     $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
                     $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
                     $qtyonhand = filter_var($r->qty_onhand, FILTER_SANITIZE_NUMBER_INT);
+                    $qtyontransit = filter_var($r->qty_ontransit, FILTER_SANITIZE_NUMBER_INT);
                     $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
                     $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
 
@@ -109,6 +111,7 @@ class CStockPart extends BaseController
                     $row['minstock'] = $minstock;
                     $row['initstock'] = $initstock;
                     $row['onhand'] = $qtyonhand;
+                    $row['ontransit'] = $qtyontransit;
                     if($initflag === "Y"){
                         $row['stock'] = $initstock;
                     }else{
@@ -131,6 +134,7 @@ class CStockPart extends BaseController
                     $minstock = filter_var($r->stock_min_value, FILTER_SANITIZE_NUMBER_INT);
                     $initstock = filter_var($r->stock_init_value, FILTER_SANITIZE_NUMBER_INT);
                     $qtyonhand = filter_var($r->qty_onhand, FILTER_SANITIZE_NUMBER_INT);
+                    $qtyontransit = filter_var($r->qty_ontransit, FILTER_SANITIZE_NUMBER_INT);
                     $stock = filter_var($r->stock_last_value, FILTER_SANITIZE_NUMBER_INT);
                     $initflag = filter_var($r->stock_init_flag, FILTER_SANITIZE_STRING);
 
@@ -140,6 +144,7 @@ class CStockPart extends BaseController
                     $row['minstock'] = $minstock;
                     $row['initstock'] = $initstock;
                     $row['onhand'] = $qtyonhand;
+                    $row['ontransit'] = $qtyontransit;
                     if($initflag === "Y"){
                         $row['stock'] = $initstock;
                     }else{
@@ -863,6 +868,57 @@ class CStockPart extends BaseController
             $row['serialnum'] = $serialnum;
             $row['qty'] = $qty;
             $row['purpose'] = $purpose;
+ 
+            $data[] = $row;
+        }
+        
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(
+            json_encode(array('data'=>$data))
+        );
+    }
+
+    /**
+     * This function is used to get list for datatables
+     */
+    public function get_list_detail_transit(){
+        $rs = array();
+        $arrWhere = array();
+
+        $fcode = $this->input->post('fcode', TRUE);
+        $fpartnum = $this->input->post('fpartnum', TRUE);
+        
+        //Parse Data for cURL
+        $arrWhere = array('fcode'=>strtoupper($fcode), 'fpartnum'=>$fpartnum);
+        //Parse Data for cURL
+        $rs_data = send_curl($arrWhere, $this->config->item('api_list_history_part_d'), 'POST', FALSE);
+        $rs = $rs_data->status ? $rs_data->result : array();
+        
+        $data = array();
+        foreach ($rs as $r) {
+            $transnum = filter_var($r->delivery_note_num, FILTER_SANITIZE_STRING);
+            $transdate = filter_var($r->created_at, FILTER_SANITIZE_STRING);
+            $airwaybill = filter_var($r->delivery_note_airwaybill, FILTER_SANITIZE_STRING);
+            $airwaybill2 = filter_var($r->delivery_note_airwaybill2, FILTER_SANITIZE_STRING);
+            $deliveryby = filter_var($r->delivery_by, FILTER_SANITIZE_STRING);
+            $eta = filter_var($r->delivery_note_eta, FILTER_SANITIZE_STRING);
+            $partnum = filter_var($r->part_number, FILTER_SANITIZE_STRING);
+            $serialnum = filter_var($r->serial_number, FILTER_SANITIZE_STRING);
+            $qty = filter_var($r->dt_delivery_note_qty, FILTER_SANITIZE_NUMBER_INT);
+            $fslcode = filter_var($r->fsl_code, FILTER_SANITIZE_STRING);
+            $fslname = filter_var($r->fsl_name, FILTER_SANITIZE_STRING);
+            
+                        
+            $row['transnum'] = $transnum;
+            $row['transdate'] = $transdate;
+            $row['airwaybill'] = $airwaybill;
+            $row['airwaybill2'] = $airwaybill2;
+            $row['deliveryby'] = $deliveryby;
+            $row['partnum'] = $partnum;
+            $row['serialnum'] = $serialnum;
+            $row['qty'] = $qty;
+            $row['eta'] = $eta;
  
             $data[] = $row;
         }
