@@ -214,6 +214,7 @@ $config['api_get_delivery_note_get_trans_detail'] = constant('urlapi').'api/cpde
 //  Begin History Trans
 // ===========================
 $config['api_list_history_part_e'] = constant('urlapi').'api/chistorytrans/list_part_e/'; //POST
+$config['api_list_history_part_d'] = constant('urlapi').'api/chistorytrans/list_part_d/'; //POST
 // ===========================
 //  End History Trans
 // ===========================

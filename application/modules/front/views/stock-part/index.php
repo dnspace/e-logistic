@@ -74,6 +74,7 @@
                                                 <th>Part Name</th>
                                                 <th>Min Stock</th>
                                                 <th>On hand FSE</th>
+                                                <th>On Transit</th>
                                                 <th>Last Stock</th>
                                             </tr>
                                             </thead>
@@ -138,6 +139,52 @@
 </div>
 <!-- End Modal Data Detail -->
 
+<!-- Modal Data Detail -->
+<div class="modal fade" id="viewdetailtransit" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="max-width: 1200px!important;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Parts On transit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box table-responsive">
+                            <table id="detail_grid_transit" class="table table-striped dt-responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Trans No</th>
+                                    <th>Date</th>
+                                    <th>airwaybill</th>
+                                    <th>airwaybill 2</th>
+                                    <th>delivery by</th>
+                                    <th>Part No</th>
+                                    <th>Serial No</th>
+                                    <th>Qty</th>
+                                    <th>ETA</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-2 offset-md-10">
+                                    Total Quantity: <span id="ttl_dqtytransit">0</span>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Data Detail -->
+
 <script type="text/javascript">
     var e_code = $("#fcode");
     var tabel;
@@ -187,6 +234,8 @@
                 { "data": 'partname' },
                 { "data": 'minstock' },
                 { "data": 'onhand' },
+                { "data": 'ontransit' },
+                
 //                { "data": 'initstock' },
                 { "data": 'stock' },
             ],
@@ -200,6 +249,17 @@
                             return data;
                         }else{
                             return '<a href="#" id="show_detail"><i class="fa fa-info-circle"></i> '+data+'</a>';
+                        }
+                    }
+                },{
+                    targets   : 5,
+                    orderable : true, //set not orderable
+                    data      : null,
+                    render    : function ( data, type, full, meta ) {
+                        if(data === "0"){
+                            return data;
+                        }else{
+                            return '<a href="#" id="show_detail_transit"><i class="fa fa-info-circle"></i> '+data+'</a>';
                         }
                     }
                 }
@@ -219,6 +279,13 @@
             fcode = data['code'];
             fpartnum = data['partno'];
             viewdetail(fcode, fpartnum);
+        });
+
+        $('#data_grid tbody').on('click', '#show_detail_transit', function (e) {        
+            var data = table.row( $(this).parents('tr') ).data();
+            fcode = data['code'];
+            fpartnum = data['partno'];
+            viewdetailtransit(fcode, fpartnum);
         });
     }
     
@@ -305,8 +372,95 @@
         });
     }
 
+    function init_detail_transit(fcode, fpartnum){
+        tabel_d_t = $('#detail_grid_transit').DataTable({
+            dom: "<'row'<'col-sm-12'B><'col-sm-10'l><'col-sm-2'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-9'p><'col-sm-3'i>>",
+            destroy: true,
+            stateSave: false,
+            deferRender: true,
+            processing: true,
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i>',
+                    title: 'Parts '+fpartnum+' On Transit',
+                    titleAttr: 'Copy',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    },
+                    footer:false
+                }, 
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                    title: 'Parts '+fpartnum+' On Transit',
+                    titleAttr: 'Excel',
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    },
+                    footer:false
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o"></i> All Page',
+                    title: 'All Parts '+fpartnum+' On Transit',
+                    titleAttr: 'Excel All Page',
+                    footer:false
+                }
+            ],
+            ajax: {                
+                url: '<?php echo $url_list_detail_transit;?>',
+                type: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                dataType: 'JSON',
+                contentType:"application/json",
+                data: function(d){
+                    d.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>";
+                    d.fcode = fcode;
+                    d.fpartnum = fpartnum;
+                }
+            },
+            columns: [
+                { "data": 'transnum' },
+                { "data": 'transdate' },
+                { "data": 'airwaybill' },
+                { "data": 'airwaybill2' },
+                { "data": 'deliveryby' },
+                { "data": 'partnum' },
+                { "data": 'serialnum' },
+                { "data": 'qty' },
+                { "data": 'eta' },
+            ],
+            order: [[ 1, "desc" ]],
+            footerCallback: function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ? i : 0;
+                };
+                var totalQty = api
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+                $('#ttl_dqty_transit').html(totalQty);
+            },
+        });
+    }
+
     function reload2(){
         table_d.ajax.reload();
+    }
+
+    function reload3(){
+        table_d_t.ajax.reload();
     }
     
     function viewdetail(fcode, fpartnum){
@@ -314,6 +468,13 @@
             show: true
         });
         init_detail(fcode, fpartnum);
+    }
+
+    function viewdetailtransit(fcode, fpartnum){
+        $('#viewdetailtransit').modal({
+            show: true
+        });
+        init_detail_transit(fcode, fpartnum);
     }
     
     $(document).ready(function() {
