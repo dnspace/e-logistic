@@ -34,6 +34,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="fairwaybill2" class="col-sm-3 col-form-label">No Airwaybill 2</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="fairwaybill2" id="fairwaybill2" class="form-control"><span class="text-danger" id="msg_fairwaybill"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="ftransnotes" class="col-sm-3 col-form-label">Transaction Notes</label>
                                     <div class="col-sm-9">
                                         <input type="text" name="ftransnotes" id="ftransnotes" class="form-control">
@@ -51,6 +57,7 @@
                                             <option value="JNE">JNE</option>
                                             <option value="YCH">YCH</option>
                                             <option value="REX">REX</option>
+                                            <option value="MARVEL">MARVEL</option>
                                             <option value="INTCOURIER">Internal Courier</option>
                                         </select>
                                         <span class="text-danger" id="msg_fdeliveryby"></span>
@@ -179,6 +186,7 @@
     var e_transnote = $('#ftransnotes');
     var e_service = $('#fservice');
     var e_airwaybill = $('#fairwaybill');
+    var e_airwaybill2 = $('#fairwaybill2');
     var e_eta = $('#feta');
     var e_deliveryby = $('#fdeliveryby');
     
@@ -646,6 +654,7 @@
             <?php echo $this->security->get_csrf_token_name(); ?> : "<?php echo $this->security->get_csrf_hash(); ?>",  
            
             fairwaybill : e_airwaybill.val(),
+            fairwaybill2 : e_airwaybill2.val(),
             ftransnote : e_transnote.val(),
             fservice : e_service.val(),
             feta : e_eta.val(),
