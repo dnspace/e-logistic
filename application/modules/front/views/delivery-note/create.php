@@ -326,11 +326,30 @@
         
         e_partnum.on('keypress', function(e){
             if (e.keyCode == 13) {
+                
                 if(isEmpty(e_partnum.val())){
                     alert('Please fill in this field!');
                     e_partnum.focus();
                 }else{
-                    if (/^[0-9A-Za-z]+$/.test(e_partnum.val())){
+                    if(e_partnum.val().includes("#")){
+                        var pn = e_partnum.val().split("#")[0];
+                        var sn = e_partnum.val().split("#")[1];
+                        check_part(e_partnum.val().split("#")[0]);
+                        if(status_checkpart === 1){
+                            add_cart(pn, sn);
+                            reload();
+                            e_partnum.prop('readonly', false);
+                            e_partnum.val('');
+                            e_partnum.focus();
+                            e_partnum_notes.html('');
+                            e_serialnum.prop('readonly', true);
+                            e_serialnum.val('');
+                        }else{
+                            alert('Spare part number contained by unknown characters!');
+                            e_partnum.val('');
+                            e_partnum.focus();
+                        }
+                    }else if (/^[0-9A-Za-z]+$/.test(e_partnum.val())){
                         check_part(e_partnum.val());
                         if(status_checkpart === 1){
                             //fill serial number

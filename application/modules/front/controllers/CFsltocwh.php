@@ -25,6 +25,7 @@ class CFsltocwh extends BaseController
         'trans_notes' => 'Notes',
         'trans_purpose' => 'Purpose',
         'airwaybill' => 'Airway Bill',
+        'airwaybill2' => 'Airway Bill 2',
         'delivery_by' => 'Delivered By',
         'delivery_type' => 'Service',
         'eta' => 'ETA'
@@ -49,6 +50,7 @@ class CFsltocwh extends BaseController
             'trans_notes' => $this->apirole.'_notes',
             'trans_purpose' => $this->apirole.'_purpose',
             'airwaybill' => $this->apirole.'_airwaybill',
+            'airwaybill2' => $this->apirole.'_airwaybill2',
             'delivery_by' => 'delivery_by',
             'delivery_type' => 'delivery_time_type',
             'eta' => $this->apirole.'_eta'
@@ -1072,6 +1074,7 @@ class CFsltocwh extends BaseController
         $date = date('Y-m-d'); 
         
         $fairwaybill = $this->input->post('fairwaybill', TRUE);
+        $fairwaybill2 = $this->input->post('fairwaybill2', TRUE);
         $ftransnotes = $this->input->post('ftransnote', TRUE);
         $fservice = $this->input->post('fservice', TRUE);
         $fdeliveryby = $this->input->post('fdeliveryby', TRUE);
@@ -1156,6 +1159,7 @@ class CFsltocwh extends BaseController
                             'ftransnotes'=>$ftransnotes, 
                             'fdest_fsl'=>$fdest_fsl,
                             'fairwaybill'=>$fairwaybill,
+                            'fairwaybill2'=>$fairwaybill2,
                             'fservice'=>$fservice,
                             'fdeliveryby'=>$fdeliveryby,
                             'feta'=>$feta,
@@ -1292,6 +1296,12 @@ class CFsltocwh extends BaseController
         $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
         $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
         $pdf->Cell(($width*(22.5/100)),7,$this->snt($rs['fsltocwh_airwaybill'], 'string'),1,1,'C');
+
+        //row 3
+        $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
+        $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
+        $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
+        $pdf->Cell(($width*(22.5/100)),7,$this->snt($rs['fsltocwh_airwaybill2'], 'string'),1,1,'C');
         
         //row 4
         $pdf->Cell(($width*(22.5/100)),7,'',0,0,'L');
