@@ -175,9 +175,13 @@ class CSupplyFromFSLBad extends BaseController{
 
             $curdatetime = new DateTime();
             $datetime2 = new DateTime($transeta);
-            $interval = $curdatetime->diff($datetime2);
-//            $elapsed = $interval->format('%a days %h hours');
-            $elapsed = $interval->format('%a days');
+            if($curdatetime > $datetime2){
+                $interval = $curdatetime->diff($datetime2);
+    //            $elapsed = $interval->format('%a days %h hours');
+                $elapsed = $interval->format('%a days');
+            }else{
+                $elapsed = '0 days';
+            }
 
             switch ($lpurpose){
                 case "RBP";
