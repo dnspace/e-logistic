@@ -111,7 +111,8 @@
                             <tr>
                                 <th>Trans No</th>
                                 <th>Date Create</th>
-                                <th>Date Close</th>
+                                <th>Eta</th>
+                                <th>Vendor</th>
                                 <!-- <th>Outgoing No.</th> -->
                                 <th>Qty</th>
                                 <th>Transfered From</th>
@@ -417,7 +418,8 @@
             columns: [
                 { "data": 'transnum' },
                 { "data": 'transdate' },
-                { "data": 'transclose' },
+                { "data": 'transeta' },
+                { "data": 'vendor' },
                 // { "data": 'transout' },
                 { "data": 'qty' },
                 { "data": 'fsl_code' },
