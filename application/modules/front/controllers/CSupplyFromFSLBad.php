@@ -164,12 +164,21 @@ class CSupplyFromFSLBad extends BaseController{
             $transnum = filter_var($r->fsltocwh_num, FILTER_SANITIZE_STRING);
             $transdate = filter_var($r->date, FILTER_SANITIZE_STRING);
             $transclose = filter_var($r->date_close, FILTER_SANITIZE_STRING);
+            $transeta = filter_var($r->fsltocwh_eta, FILTER_SANITIZE_STRING);
+            $vendor = filter_var($r->delivery_by, FILTER_SANITIZE_STRING);
             $status = filter_var($r->fsltocwh_status, FILTER_SANITIZE_STRING);
             $lpurpose = filter_var($r->fsltocwh_purpose, FILTER_SANITIZE_STRING);
             $qty = filter_var($r->fsltocwh_qty, FILTER_SANITIZE_NUMBER_INT);
             $user = filter_var($r->user_fullname, FILTER_SANITIZE_STRING);
             $notes = filter_var($r->fsltocwh_notes, FILTER_SANITIZE_STRING);
             $fsl_code = filter_var($r->fsl_code, FILTER_SANITIZE_STRING);
+
+            $curdatetime = new DateTime();
+            $datetime2 = new DateTime($transeta);
+            $interval = $curdatetime->diff($datetime2);
+//            $elapsed = $interval->format('%a days %h hours');
+            $elapsed = $interval->format('%a days');
+
             switch ($lpurpose){
                 case "RBP";
                     $purpose = "RETURN BAD PART";
@@ -183,8 +192,9 @@ class CSupplyFromFSLBad extends BaseController{
             $row['transnum'] = $transnum;
             $row['transdate'] = date('d/m/Y H:i', strtotime($transdate));
             $row['transclose'] = date('d/m/Y H:i', strtotime($transclose));
-            $row['status'] = $status;
             $row['fsl_code'] =$fsl_code;
+            $row['transeta'] =$transeta;
+            $row['vendor'] =$vendor;
             $row['purpose'] = $purpose;
             $row['qty'] = $qty;
             $row['user'] = $user;
@@ -192,7 +202,8 @@ class CSupplyFromFSLBad extends BaseController{
             $row['button'] = 
             //'<a href="'.base_url("print-fsltocwh-trans/").$transnum.'" target="_blank"><i class="mdi mdi-printer mr-2 text-muted font-18 vertical-middle"></i></a>'.
             '<a href="javascript:viewdetail(\''.$transnum.'\');"><i class="mdi mdi-information mr-2 text-muted font-18 vertical-middle"></i></a>';
-            
+            $row['status'] = $status === "open" ? strtoupper($status)."<br> (".$elapsed.")" : strtoupper($status);
+
             if((count($e_coverage)!=0) AND (count($e_purpose)!=0)){
                 if(in_array($fsl_code, $e_coverage) AND in_array($lpurpose, $e_purpose)){
                     $data[] = $row;
