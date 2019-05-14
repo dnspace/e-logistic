@@ -423,3 +423,13 @@ $config['api_list_report_cwh'] = constant('urlapi').'api/creportcwh/list/'; //PO
 // ===========================
 //  End Procedure
 // ===========================
+
+// ===========================
+//  Begin Procedure
+// ===========================
+
+$config['api_list_report_doa'] = constant('urlapi').'api/creportdoa/list/'; //POST
+
+// ===========================
+//  End Procedure
+// ===========================
